@@ -1,40 +1,77 @@
 <?php
 
 namespace Meride\Network;
-
+/**
+ * Token class will manage REST API token system
+ */
 class Token {
+    /**
+     * The access token is the string that will be returned after the first call to the API.
+     * It's the real key that API will use in order to authenticate the call
+     * @var string
+     */
     public $accessToken = '';
+    /**
+     * The refresh token is the string that will be used when the access token expires in order to generate a new one.
+     * @var string
+     */
     public $refreshToken = '';
+    /**
+     * Is the primary authorization string used for the first authentication to the API
+     * @var string
+     */
     private $authCode = '';
+    /**
+     * The base URL of the API
+     * @var string
+     */
     private $authURL = '';
-    
+    /**
+     * Token constructor
+     *
+     * @param string $authCode Is the primary authorization string used for the first authentication to the API
+     * @param string $authURL The base URL of the API
+     */
     public function __construct($authCode, $authURL)
     {
         $this->authCode = $authCode;
         $this->authURL = $authURL;
     }
-
+    /**
+     * Check if the access token is valid
+     * @todo To be implemented. Now it always returns true
+     * @return boolean
+     */
     private function validToken()
     {
-        // se c'è bisogno di generarne uno nuovo dopo la scadenza
         return true;
     }
-
+    /**
+     * It will generate a new access token using the refresh token
+     * @todo To be implemented
+     * @return void
+     */
     private function refreshToken()
     {
         // richiede un nuovo auth token utilizzando il refresh_token
     }
-
+    /**
+     * It generates a state useful as a security system by the remote API
+     * @return string
+     */
     private function generateState()
     {
         return "".rand(0, 999999);
     }
-
+    /**
+     * Function that generates the access token and the refresh token
+     * @return string
+     */
     public function generate()
     {
         if (!empty($this->refreshToken) and !empty($this->accessToken)) {
             if (!$this->validToken()) {
-                $this->refreshToken;
+                $this->refreshToken();
             }
         }
         $state = $this->generateState();

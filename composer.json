@@ -1,0 +1,29 @@
+{
+    "name": "mosaicolab/meride-php-lib",
+    "description": "Libraries to interact with Meride platform",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "MosaicoDevTeam",
+            "email": "giovanni.toppi@mosaicolab.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^6"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Meride\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "archive": {
+        "exclude": ["/tests", "bitbucket-pipelines.yml"]
+    }
+}

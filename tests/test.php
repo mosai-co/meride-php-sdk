@@ -5,7 +5,6 @@ use Meride\Api;
 
 define('MERIDE_URL', "http://dev7.meride.tv/webink");
 define('MERIDE_ACCESS_TOKEN', "EtJaOVJxaNoefxiT6lBNza9h8XhQBis5C15gNFEOiTSog18cczQCAQKyDRf50x");
-define("DEBUG_CUSTOM", false);
 
 $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL);
 
@@ -20,7 +19,7 @@ $video = $merideApi->request('getVideo', array(
     'titolo' => "Test update2"
 ));*/
 //$video = $merideApi->delete('video', 735);
-$videoResponse = $merideApi->get('video', 860);
+$videoResponse = $merideApi->get('configuration');
 
 /*$videoResponse = $merideApi->create('categoria', array(
     'titolo' => "Test update7",
@@ -46,6 +45,10 @@ echo "</pre>";
 echo "JSON CONTENT\r\n========\r\n";
 echo "<pre>";
 echo var_dump($videoResponse->jsonContent);
+echo "</pre>";
+echo "JSON CONTENT COUNT\r\n========\r\n";
+echo "<pre>";
+echo var_dump($videoResponse->count());
 echo "</pre>";
 echo "\r\n========\r\ERROR\r\n========\r\n";
 echo "<pre>";

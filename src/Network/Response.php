@@ -23,4 +23,16 @@ class Response {
         $this->jsonContent = json_decode($content);
         $this->error = $error;
     }
+    /**
+     * Returns the number of elements of the response
+     * @return int
+     */
+    public function count()
+    {
+        if (!empty($this->jsonContent) and is_array($this->jsonContent))
+        {
+            return count($this->jsonContent);
+        }
+        return 0;
+    }
 }

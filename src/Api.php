@@ -5,7 +5,7 @@ namespace Meride;
 use Meride\Network\Request;
 use Meride\Network\Response;
 /**
- * Interfece/SDK of Meride's REST APIs
+ * Interface/SDK of Meride's REST APIs
  * REST API documentation at: www.meride.tv/docs/api/
  * @class Api
  * @namespace Meride

@@ -4,9 +4,10 @@ require_once __DIR__.'/../vendor/autoload.php';
 use Meride\Api;
 
 define('MERIDE_URL', "http://dev7.meride.tv/webink");
+define('MERIDE_VERSION', 'v2');
 define('MERIDE_ACCESS_TOKEN', "EtJaOVJxaNoefxiT6lBNza9h8XhQBis5C15gNFEOiTSog18cczQCAQKyDRf50x");
 
-$merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL);
+$merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
 
 /*$embed = $merideApi->request('getEmbed', array(
     'id' => '1211'
@@ -19,7 +20,7 @@ $video = $merideApi->request('getVideo', array(
     'titolo' => "Test update2"
 ));*/
 //$video = $merideApi->delete('video', 735);
-$videoResponse = $merideApi->get('configuration');
+$videoResponse = $merideApi->get('category');
 
 /*$videoResponse = $merideApi->create('categoria', array(
     'titolo' => "Test update7",

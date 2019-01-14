@@ -27,15 +27,26 @@ class Token {
      */
     private $authURL = '';
     /**
+     * The version of the API
+     * @var string
+     */
+    private $version = '';
+    /**
      * Token constructor
      *
      * @param string $authCode Is the primary authorization string used for the first authentication to the API
      * @param string $authURL The base URL of the API
+     * @param string $version The version of the API
      */
-    public function __construct($authCode, $authURL)
+    public function __construct($authCode, $authURL, $version = '')
     {
         $this->authCode = $authCode;
         $this->authURL = $authURL;
+        if (!empty($this->authURL) and substr($this->authURL, -1) != '/')
+        {
+            $this->authURL .= '/';
+        }
+        $this->version = $version;
     }
     /**
      * Check if the access token is valid
@@ -80,16 +91,21 @@ class Token {
             'auth-code: ' . $this->authCode,
             'state: ' . $state,
         );
-
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($c, CURLOPT_URL, $this->authURL . '/restauth/verify');
+        if (empty($this->version))
+        {
+            curl_setopt($c, CURLOPT_URL, $this->authURL.'restauth/verify');
+        }
+        else
+        {
+            curl_setopt($c, CURLOPT_URL, $this->authURL. 'restauth/'.$this->version.'/verify');
+        }
 
         $content = curl_exec($c);
         curl_close($c);
         $obj = json_decode($content);
-        
         if (isset($obj->errors)) {
             throw new \Exception(implode(',', $obj->errors));
         }

@@ -28,6 +28,11 @@ class Request
      */
     private $authURL = '';
     /**
+     * The version of the API
+     * @var string
+     */
+    private $version = '';
+    /**
      * Reference to the Token object
      * @var Meride\Network\Token
      */
@@ -52,14 +57,28 @@ class Request
     public function setAuthURL($authURL)
     {
         $this->authURL = $authURL;
+        if (!empty($this->authURL) and substr($this->authURL, -1) != '/')
+        {
+            $this->authURL .= '/';
+        }
+    }
+    /**
+     * Sets the version of the API to use
+     * @param string $version the version of the API to use
+     * @return void
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
     /**
      * Function that has to be called after Request initialization
      * @param string $authCode the authorization code
      * @param string $authCode the authorization URL
+     * @param string $version The version of the API
      * @return void
      */
-    public function init($authCode = null, $authURL = null)
+    public function init($authCode = null, $authURL = null, $version = '')
     {
         if (!empty($authCode))
         {
@@ -69,7 +88,11 @@ class Request
         {
             $this->setAuthURL($authURL);
         }
-        $this->token = new Token($this->authCode, $this->authURL);
+        if (!empty($version))
+        {
+            $this->setVersion($version);
+        }
+        $this->token = new Token($this->authCode, $this->authURL, $this->version);
         $this->token->generate();
     }
     /**
@@ -83,34 +106,6 @@ class Request
         }
         return self::$instance;
     }
-
-    /*public function forceDeleteVideo($id_video)
-    {
-        $embed_list = $this->request("allEmbed", array('search_video_id' => $id_video));
-
-        if (!$embed_list)
-            return true;
-
-
-        foreach ($embed_list as $key => $embed) {
-
-                $check = $this->request("removeEmbed", array("id" => $embed->id));
-
-                if (!$check) {
-                    return false;
-                }
-
-        }
-
-        $check = $this->request("removeVideo", array("id" => $id_video));
-
-        if (!$check) {
-            return false;
-        }
-
-
-        return true;
-    }*/
     /**
      * Parse the error return by the REST service into a string
      * @param object $res the response of the REST API service
@@ -183,9 +178,12 @@ class Request
         if (empty($this->token)) {
             throw new \Exception("Token uninitialized. Please be sure to call Request->init() method");
         }
-        $resourceURL = $this->authURL."/rest/".$resource;
+        $resourceURL = $this->authURL.'rest/'.$resource;
+        if (!empty($this->version))
+        {
+            $resourceURL = $this->authURL.'rest/'.$this->version."/".$resource;
+        }
         $ch = curl_init();
-
         $headers = array(
             'Accept: application/json',
             'access-token: ' . $this->token->accessToken,

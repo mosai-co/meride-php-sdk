@@ -21,11 +21,12 @@ class Api
      * Api constructor
      * @param String $authCode The auth code of Meride's REST API
      * @param String $authURL The base URL of Meride's REST API
+     * @param String $version The version of the API
      */
-    public function __construct($authCode, $authURL)
+    public function __construct($authCode, $authURL, $version = '')
     {
         $this->request = new Request();
-        $this->request->init($authCode, $authURL);
+        $this->request->init($authCode, $authURL, $version);
     }
     /**
      * Creates a new object of the given entity type

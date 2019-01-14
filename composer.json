@@ -24,7 +24,6 @@
         ]
     },
     "prefer-stable": true,
-    "optimize-autoloader": true,
     "archive": {
         "exclude": ["/tests", "bitbucket-pipelines.yml"]
     }

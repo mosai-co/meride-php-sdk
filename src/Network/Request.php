@@ -190,9 +190,7 @@ class Request
             'Accept: application/json',
             'access-token: ' . $this->token->accessToken,
         );
-
         $verb = strtoupper($verb);
-
         if (in_array($verb, array('POST', 'PUT', 'DELETE')))
         {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -223,102 +221,6 @@ class Request
             return new Response(false, new Error($httpcode, self::getErrorString($res)));
         }
         return ($res) ? new Response($res, false) :  new Response(array(), false);
-
-        /*switch ($action) {
-            case 'allVideo':
-                $azione = '/rest/video.json';
-                break;
-
-            case 'allEmbed':
-                $parametri = array();
-
-                if (count($params) > 0) {
-                    foreach ($params as $key => $value) {
-                        $parametri[] = $key . "=" . $value;
-                    }
-                }
-
-                $azione = '/rest/embed.json' . (($parametri) ? "?" . implode('&', $parametri) : "");
-                break;
-
-            case 'allSocial':
-                $azione = '/rest/facebookvideo.json';
-                break;
-
-            case 'getVideo':
-                $id = $params["id"];
-                $azione = "/rest/video/$id.json";
-                break;
-
-            case 'getEmbed':
-                $id = $params["id"];
-                unset($params['id']);
-                $azione = "/rest/embed/$id.json";
-                break;
-
-            case 'editVideo':
-                $headers[] = "X-HTTP-Method-Override: PUT";
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                $id = $params["id"];
-                unset($params['id']);
-                $azione = "/rest/video/$id.json";
-                $need_params = true;
-                break;
-
-            case 'editEmbed':
-                $headers[] = "X-HTTP-Method-Override: PUT";
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                $id = $params["id"];
-                unset($params['id']);
-                $azione = "/rest/embed/$id.json";
-                $need_params = true;
-                break;
-
-            case 'insertVideo':
-                $azione = '/rest/video.json';
-                $need_params = true;
-                break;
-
-            case 'createEmbed':
-                $azione = '/rest/embed.json';
-                $need_params = true;
-                break;
-
-            case 'createSocial':
-                $azione = '/rest/facebookvideo.json';
-                $need_params = true;
-                break;
-
-
-            case 'removeEmbed':
-                $id = $params["id"];
-                $headers[] = "X-HTTP-Method-Override: DELETE";
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                $azione = "/rest/embed/$id.json";
-                $is_remove = true;
-                break;
-
-            case 'removeSocial':
-                $id = $params["id"];
-                $headers[] = "X-HTTP-Method-Override: DELETE";
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                $azione = "/rest/facebookvideo/$id.json";
-                $is_remove = true;
-                break;
-
-            case 'removeVideo':
-                $id = $params["id"];
-                $headers[] = "X-HTTP-Method-Override: DELETE";
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                $azione = "/rest/video/$id.json";
-                $is_remove = true;
-                break;
-
-            default:
-                curl_close($ch);
-                return [];
-                break;
-        }*/
     }
 
     

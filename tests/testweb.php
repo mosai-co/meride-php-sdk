@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 
-use Meride\Web as MerideWeb;
+use Meride\Web\Embed as Embed;
 
 
-$merideWeb = new MerideWeb();
+echo Embed::presumeScriptURL('webink');

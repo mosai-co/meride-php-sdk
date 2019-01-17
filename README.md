@@ -4,6 +4,14 @@ General PHP libraries for Meride that interacts with Meride's APIs
 
 ## USE
 
+### INSTALLATION
+
+`composer install`
+
+### DOCUMENTATION GENERATION
+
+`vendor/bin/apigen generate src --destination docs`
+
 ### INITIALIZATION
 
 ```php

@@ -7,8 +7,7 @@ use Meride\Network\Response;
 /**
  * Interface/SDK of Meride's REST APIs
  * REST API documentation at: www.meride.tv/docs/api/
- * @class Api
- * @namespace Meride
+ * @package Meride\Api
  */
 class Api
 {

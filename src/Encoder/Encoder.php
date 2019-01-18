@@ -29,7 +29,7 @@ class Encoder
         $this->checkConnection();
     }
 
-    public function request($type, $path, $params = array())
+    private function request($type, $path, $params = array())
     {
         $ch = curl_init();
 

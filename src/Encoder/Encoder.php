@@ -2,12 +2,19 @@
 
 namespace Meride\Encoder;
 /**
- * Classe per la gestione delle interazioni con il sistema di encoding
+ * Class for managing interactions with the encoding system
  */
 class Encoder
 {
-    private $key, $host;
+    private $key;
+    private $host;
 
+    /**
+     * Encoder constructor
+     *
+     * @param string $key The authorizazion key
+     * @param string $host The host of the encoder
+     */
     public function __construct($key, $host)
     {
         $this->key = $key;

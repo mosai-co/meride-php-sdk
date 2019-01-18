@@ -1,7 +1,9 @@
 <?php
 
 namespace Meride\Encoder;
-
+/**
+ * Classe per la gestione delle interazioni con il sistema di encoding
+ */
 class Encoder
 {
     private $key, $host;

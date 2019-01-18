@@ -14,6 +14,8 @@ To see the documentation of the project launch this from the command line and ac
 
 `vendor/bin/apigen generate src --destination docs`
 
+or launch the script `./generatedocs.sh`
+
 ### INITIALIZATION
 
 ```php

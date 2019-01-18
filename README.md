@@ -10,6 +10,8 @@ General PHP libraries for Meride that interacts with Meride's APIs
 
 ### DOCUMENTATION GENERATION
 
+To see the documentation of the project launch this from the command line and access to the docs/ directory with a browser
+
 `vendor/bin/apigen generate src --destination docs`
 
 ### INITIALIZATION
@@ -60,4 +62,36 @@ read error
 
 ```php
 $videoResponse->error
+```
+
+### WEB FEATURES
+
+generate Meride's div
+
+```php
+use Meride\Web\Embed as Embed;
+echo Embed::div(array(
+    'embedID' => '1594',
+    'clientID' => 'webink',
+    'width' => '640',
+    'height' => '400',
+    'bulkLabel' => 'testLabel',
+    'autoPlay' => 'true',
+    'responsive' => 'true'
+));
+
+```
+
+generate Meride's iframe
+
+```php
+use Meride\Web\Embed as Embed;
+echo Embed::iframe(array(
+    'embedID' => '1594',
+    'clientID' => 'webink',
+    'width' => '640',
+    'height' => '400',
+    'bulkLabel' => 'testLabel'
+));
+
 ```

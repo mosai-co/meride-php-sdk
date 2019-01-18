@@ -97,4 +97,35 @@ class Embed
         return '<div class="meride-video-container" data-embed="'.$id.'" data-customer="'.$client.'" data-nfs="'.$nfs.'" data-width="'.$width.'" data-height="'.$height.'"'.$other_datas.'></div>
         <script src="'.$scriptURL.'"></script>';
     }
+    /**
+     * Gives back the HTML code of Meride for AMP implementation
+     * @param array $params an array composed of baseURL, clientID, embedID, width, height, bulkLabel, imageFillURL and imageFillPlaceholder. All parameters must be strings.
+     * @return string
+     */
+    public function ampiframe($params)
+    {
+        $client = empty($params['clientID']) ? '' : $params['clientID'];
+        $baseURL = empty($params['baseURL']) ? self::presumeBaseIframeURL($client) : $params['baseURL'];
+        if (substr($baseURL, -1) != '/')
+        {
+            $baseURL .= '/';
+        }
+        $id = empty($params['embedID']) ? '' : $params['embedID'];
+        $bulkLabel = empty($params['bulkLabel']) ? '' : $params['bulkLabel'];
+        $imageFillURL = empty($params['imageFillURL']) ? '' : $params['imageFillURL'];
+        $imageFillPlaceholder = empty($params['imageFillPlaceholder']) ? '' : $params['imageFillPlaceholder'];
+        $width = empty($params['width']) ? '540' : $params['width'];
+        $height = empty($params['height']) ? '302' : $params['height'];
+        $url = $baseURL.$id.'/'.$client;
+        if (!empty($bulkLabel))
+        {
+            $url .= '/'.$bulkLabel;
+        }
+        $imageFillCode = '';
+        if (!empty($imageFillURL))
+        {
+            $imageFillCode = '<amp-img layout="fill" src="'.$imageFillURL.'" placeholder="'.$imageFillPlaceholder.'"></amp-img>';
+        }
+        return '<amp-iframe width="'.$width.'" height="'.$height.'" sandbox="allow-scripts allow-popups allow-same-origin" allowfullscreen frameborder="0" src="'.$url.'">'.$imageFillCode.'</amp-iframe>';
+    }
 }

@@ -12,7 +12,7 @@ use Meride\Web\Embed as Embed;
     'bulkLabel' => 'testLabel'
 ));*/
 
-echo Embed::div(array(
+/*echo Embed::div(array(
     'embedID' => '1594',
     'clientID' => 'webink',
     'width' => '640',
@@ -20,4 +20,12 @@ echo Embed::div(array(
     'bulkLabel' => 'testLabel',
     'autoPlay' => 'true',
     'responsive' => 'true'
+));*/
+
+echo Embed::ampiframe(array(
+    'embedID' => '1594',
+    'clientID' => 'webink',
+    'width' => '640',
+    'height' => '400',
+    'bulkLabel' => 'testLabel'
 ));

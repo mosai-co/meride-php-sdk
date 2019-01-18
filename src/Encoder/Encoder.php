@@ -6,12 +6,19 @@ namespace Meride\Encoder;
  */
 class Encoder
 {
+    /**
+     * The authorizazion key
+     * @var
+     */
     private $key;
+    /**
+     * The host of the encoder
+     * @var
+     */
     private $host;
 
     /**
      * Encoder constructor
-     *
      * @param string $key The authorizazion key
      * @param string $host The host of the encoder
      */

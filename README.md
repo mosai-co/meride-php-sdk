@@ -1,6 +1,12 @@
 # General PHP libraries for Meride
 
-General PHP libraries for Meride that interacts with Meride's APIs
+General PHP libraries for Meride that interacts with Meride's APIs, with Meride's encoders and gives web functionalities.
+
+The packages included are:
+
+- **Api** for communications with Meride's APIs
+- **Web** for producing HTML code (eg. integrating an embed)
+- **Encoder** for interacting with the encoder
 
 ## USE
 

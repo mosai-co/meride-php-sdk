@@ -22,7 +22,7 @@ use Meride\Web\Embed as Embed;
     'responsive' => 'true'
 ));*/
 
-echo Embed::ampiframe(array(
+echo Embed::instantarticle(array(
     'embedID' => '1594',
     'clientID' => 'webink',
     'width' => '640',

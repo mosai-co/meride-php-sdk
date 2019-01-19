@@ -104,7 +104,7 @@ class Embed
      * @param array $params an array composed of baseURL, clientID, embedID, width, height, bulkLabel, imageFillURL and imageFillPlaceholder. All parameters must be strings.
      * @return string
      */
-    public function ampiframe($params)
+    public static function ampiframe($params)
     {
         $client = empty($params['clientID']) ? '' : $params['clientID'];
         $baseURL = empty($params['baseURL']) ? self::presumeBaseIframeURL($client) : $params['baseURL'];
@@ -129,5 +129,29 @@ class Embed
             $imageFillCode = '<amp-img layout="fill" src="'.$imageFillURL.'" placeholder="'.$imageFillPlaceholder.'"></amp-img>';
         }
         return '<amp-iframe width="'.$width.'" height="'.$height.'" sandbox="allow-scripts allow-popups allow-same-origin" allowfullscreen frameborder="0" src="'.$url.'">'.$imageFillCode.'</amp-iframe>';
+    }
+    /**
+     * Gives back the HTML code of Meride for Instant Article implementation
+     * @param array $params an array composed of baseURL, clientID, embedID, width, height, bulkLabel, imageFillURL and imageFillPlaceholder. All parameters must be strings.
+     * @return string
+     */
+    public static function instantarticle($params)
+    {
+        $client = empty($params['clientID']) ? '' : $params['clientID'];
+        $baseURL = empty($params['baseURL']) ? self::presumeBaseIframeURL($client) : $params['baseURL'];
+        if (substr($baseURL, -1) != '/')
+        {
+            $baseURL .= '/';
+        }
+        $id = empty($params['embedID']) ? '' : $params['embedID'];
+        $bulkLabel = empty($params['bulkLabel']) ? '' : $params['bulkLabel'];
+        $width = empty($params['width']) ? '540' : $params['width'];
+        $height = empty($params['height']) ? '302' : $params['height'];
+        $url = $baseURL.$id.'/'.$client;
+        if (!empty($bulkLabel))
+        {
+            $url .= '/'.$bulkLabel;
+        }
+        return '<figure class="op-interactive"><iframe width="'.$width.'" height="'.$height.'" src="'.$url.'"></iframe></figure>';
     }
 }

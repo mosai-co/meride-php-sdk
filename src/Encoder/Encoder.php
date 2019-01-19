@@ -9,12 +9,10 @@ class Encoder
 {
     /**
      * The authorizazion key
-     * @var
      */
     private $key;
     /**
      * The host of the encoder
-     * @var
      */
     private $host;
 

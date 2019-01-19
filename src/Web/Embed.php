@@ -1,7 +1,9 @@
 <?php
 
 namespace Meride\Web;
-
+/**
+ * Generate HTML content for and embed and gets useful to integrate Meride
+ */
 class Embed
 {
     /**

@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Api entrypoint
+ * 
+ * @category Meride
+ * @package  Meride
+ * @author   Toppi Giovanni Manuel @MerideDevTeam <giovanni.toppi@mosai.co>
+ * @license  prorietary https://www.meride.tv
+ * @link     https://www.meride.tv/docs
+ * @todo     Write better documentation about the parameters to pass to the various methods
+ */
 namespace Meride;
 
 use Meride\Network\Request;

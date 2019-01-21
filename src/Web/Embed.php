@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * HTML content generator for Meride and useful stuff.
+ * 
+ * @category Meride
+ * @package  Meride\Web
+ * @author   Toppi Giovanni Manuel @MerideDevTeam <giovanni.toppi@mosai.co>
+ * @license  prorietary https://www.meride.tv
+ * @link     https://www.meride.tv/docs
+ * @todo     Write better documentation about the parameters to pass to the various methods
+ */
 namespace Meride\Web;
 /**
  * Generate HTML content for and embed and gets useful to integrate Meride

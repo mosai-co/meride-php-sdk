@@ -8,7 +8,6 @@ The packages included are:
 - **Web** for producing HTML code (eg. integrating an embed)
 - **Encoder** for interacting with the encoder
 
-## USE
 
 ### INSTALLATION
 

@@ -90,11 +90,10 @@ class Embed
      * @param array $params an array composed of scriptURL, clientID, nfs, embedID, width, height and bulkLabel. All parameters must be strings.
      * @return string
      */
-    public static function div($params)
+    public static function divOnly($params)
     {
         $client = empty($params['clientID']) ? '' : $params['clientID'];
         $nfs = empty($params['nfs']) ? $client : $params['nfs'];
-        $scriptURL = empty($params['scriptURL']) ? self::presumeScriptURL($client) : $params['scriptURL'];
         $id = empty($params['embedID']) ? '' : $params['embedID'];
         $bulkLabel = empty($params['bulkLabel']) ? '' : $params['bulkLabel'];
         $autoPlay = empty($params['autoPlay']) ? '' : $params['autoPlay'];
@@ -105,8 +104,19 @@ class Embed
         $autoPlayCode = empty($autoPlay) ? '' : ' data-autoplay="'.$autoPlay.'"';
         $responsiveCode = empty($responsive) ? '' : ' data-responsive="'.$responsive.'"';
         $other_datas = $bulkLabelCode.$autoPlayCode.$responsiveCode;
-        return '<div class="meride-video-container" data-embed="'.$id.'" data-customer="'.$client.'" data-nfs="'.$nfs.'" data-width="'.$width.'" data-height="'.$height.'"'.$other_datas.'></div>
-        <script src="'.$scriptURL.'"></script>';
+        return '<div class="meride-video-container" data-embed="'.$id.'" data-customer="'.$client.'" data-nfs="'.$nfs.'" data-width="'.$width.'" data-height="'.$height.'"'.$other_datas.'></div>';
+    }
+    /**
+     * Gives back the HTML code of Meride's div with script included do it will launch the player when included in the page
+     * @param array $params an array composed of scriptURL, clientID, nfs, embedID, width, height and bulkLabel. All parameters must be strings.
+     * @return string
+     */
+    public static function div($params)
+    {
+        $client = empty($params['clientID']) ? '' : $params['clientID'];
+        $nfs = empty($params['nfs']) ? $client : $params['nfs'];
+        $scriptURL = empty($params['scriptURL']) ? self::presumeScriptURL($client) : $params['scriptURL'];
+        return self::divOnly($params).'<script src="'.$scriptURL.'"></script>';
     }
     /**
      * Gives back the HTML code of Meride for AMP implementation

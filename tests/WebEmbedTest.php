@@ -37,4 +37,26 @@ final class WebEmbedTest extends TestCase
             'bulkLabel' => 'testLabel'
         )));
     }
+
+    public function testDivOnlyCode()
+    {
+        $this->assertNotEmpty(Embed::divOnly(array(
+            'embedID' => '1595',
+            'clientID' => 'webink',
+            'width' => '640',
+            'height' => '400',
+            'bulkLabel' => 'testLabel'
+        )));
+    }
+
+    public function testDivCode()
+    {
+        $this->assertNotEmpty(Embed::div(array(
+            'embedID' => '1595',
+            'clientID' => 'webink',
+            'width' => '640',
+            'height' => '400',
+            'bulkLabel' => 'testLabel'
+        )));
+    }
 }

@@ -94,6 +94,8 @@ class Token {
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($c, CURLOPT_POSTREDIR, 3);
+        curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
         if (empty($this->version))
         {
             curl_setopt($c, CURLOPT_URL, $this->authURL.'restauth/verify');

@@ -64,7 +64,37 @@ class Token {
      */
     private function refreshToken()
     {
-        // richiede un nuovo auth token utilizzando il refresh_token
+        $headers = array(
+			'Accept: application/json',
+			'refresh-token: '.$this->refreshToken,
+		);
+		$c = curl_init();
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
+        if (empty($this->version))
+        {
+            curl_setopt($c, CURLOPT_URL, $this->authURL.'restauth/refresh');
+        }
+        else
+        {
+            curl_setopt($c, CURLOPT_URL, $this->authURL. 'restauth/'.$this->version.'/refresh');
+        }
+		$content = curl_exec($c);
+		curl_close($c);
+		$obj = json_decode($content);
+		if(isset($obj->errors))
+		{
+			throw new Exception(implode(",", $obj->errors));
+		}
+ 
+		if(!isset($obj->access_token))
+		{
+			throw new Exception("No access-token");
+		}
+		else
+		{
+			$this->accessToken = $obj->access_token;
+		}
     }
     /**
      * It generates a state useful as a security system by the remote API
@@ -80,11 +110,6 @@ class Token {
      */
     public function generate()
     {
-        if (!empty($this->refreshToken) and !empty($this->accessToken)) {
-            if (!$this->validToken()) {
-                $this->refreshToken();
-            }
-        }
         $state = $this->generateState();
         $headers = array(
             'Accept: application/json',
@@ -127,9 +152,13 @@ class Token {
         } else {
             $this->accessToken = $obj->access_token;
         }
-
-        if (isset($obj->refresh_token)) {
-            $this->refreshToken = $obj->refresh_token;
+        
+        if(isset($obj->expiration_date) and $obj->expiration_date != null and $obj->expiration_date < date('Y-m-d H:i:s'))
+		{
+			if(isset($obj->refresh_token)){
+				$this->refreshToken = $obj->refresh_token;
+				$this->refreshToken();
+			}
         }
     }
 }

@@ -7,12 +7,15 @@ define('MERIDE_URL', "http://dev7.meride.tv/webink");
 define('MERIDE_VERSION', 'v2');
 define('MERIDE_ACCESS_TOKEN', "EtJaOVJxaNoefxiT6lBNza9h8XhQBis5C15gNFEOiTSog18cczQCAQKyDRf50x");
 
+
 $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
 
-/*$embed = $merideApi->request('getEmbed', array(
-    'id' => '1211'
-));
 
+
+/*$videoResponse = $merideApi->request('getEmbed', array(
+    'id' => '1211'
+));*/
+/*
 $video = $merideApi->request('getVideo', array(
     'id' => $embed->video->id
 ));*/
@@ -20,12 +23,26 @@ $video = $merideApi->request('getVideo', array(
     'titolo' => "Test update2"
 ));*/
 //$video = $merideApi->delete('video', 735);
-$videoResponse = $merideApi->get('category');
+//$videoResponse = $merideApi->get('category');
+$videoResponse = $merideApi->get('embed', 1701);
 
 /*$videoResponse = $merideApi->create('categoria', array(
-    'titolo' => "Test update7",
+    'titolo' => "Test update8",
     'father_id' => 1,
     'descrizione' => 'Lorem ispum'
+));*/
+
+//$info = pathinfo("./test_del12_a.mp4");
+//print_r($info);
+//$video->setPostFileName("test_del12_b.mp4");
+//$info = pathinfo($video_url);
+//$video->setPostFileName(uniqid() . ((isset($info["extension"])) ? "." . $info["extension"] : null));
+//$video->setPostFileName();
+/*$video_url = "/var/www/html/mosaico/meride-php-api/tests/test_del12_b.mp4";
+$video = new \CurlFile($video_url);
+$videoResponse = $merideApi->create('video', array(
+    'title' => "Test video",
+    'video' => $video
 ));*/
 
 /**

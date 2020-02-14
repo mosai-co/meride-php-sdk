@@ -27,10 +27,10 @@ or launch the script `./generatedocs.sh`
 
 use Meride\Api;
 
-define('MERIDE_URL', "http://URL_TO_REST_SERVICE");
-define('MERIDE_ACCESS_TOKEN', "ACCESS_TOKEN");
+define('MERIDE_URL', "https://URL_TO_REST_SERVICE");
+define('MERIDE_AUTH_CODE', "AUTH_CODE");
 
-$merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL);
+$merideApi = new Api(MERIDE_AUTH_CODE, MERIDE_URL);
 
 
 ```

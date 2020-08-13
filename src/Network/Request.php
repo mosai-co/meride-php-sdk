@@ -128,13 +128,17 @@ class Request
      * Reads an object of the given entity type with the given id
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param String|\Number $id The id of the desired object
+     * @param Array $params An associative array to transorm to GET parameters
      * @return Network\Response The response for the object/error
      */
-    public function get($entityName, $id = null) {
+    public function get($entityName, $id = null, array $params) {
         $resource = $entityName.".json";
         if (!empty($id))
         {
             $resource = $entityName."/".$id.".json";
+        }
+        if (!empty($params)) {
+            $resource .= '?'.http_build_query($params);
         }
         return $this->request($resource, 'GET');
     }

@@ -57,18 +57,19 @@ class Api
      * Reads an object of the given entity type with the given id
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param String|\Number $id The id of the desired object
+     * @param Array $params An associative array to transorm to GET parameters
      * @return Network\Response The response for the object/error
      */
-    public function read($entityName, $id = null)
+    public function read($entityName, $id = null, array $params = [])
     {
-        return $this->request->get($entityName, $id);
+        return $this->request->get($entityName, $id, $params);
     }
     /**
      * @alias Api::read
      */
-    public function get($entityName, $id = null)
+    public function get($entityName, $id = null, array $params = [])
     {
-        return $this->read($entityName, $id);
+        return $this->read($entityName, $id, $params);
     }
     /**
      * Updates the object of the given entity type with the given id

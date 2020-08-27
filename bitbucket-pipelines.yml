@@ -14,20 +14,14 @@ pipelines:
           - apt-get update && apt-get install -y unzip
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install
+          - export MERIDE_URL=$MERIDE_URL_TEST
+          - export MERIDE_AUTH_CODE=$MERIDE_AUTH_CODE
           - ./testall.sh
-  branches:
-    master:
-      - step:
-          caches:
-            - composer
-          script:
-            - apt-get update && apt-get install -y unzip
-            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-            - composer install
-            - ./testall.sh
+  tags:
+    'release/*.*':
       - step:
           name: Deploy to composer.meride.tv
           deployment: production
           script:
             - apt-get update && apt-get install -y wget
-            - wget -O/dev/null -q https://composer.meride.tv/webhook.php?package=mosaicolab/meride-php-lib
+            - wget -O/dev/null -q https://composer.meride.tv/webhook.php?package=mosaicolab/meride-public-php-libs

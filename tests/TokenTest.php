@@ -7,8 +7,8 @@ final class TokenTest extends TestCase
 {
     protected function setUp()
     {
-        $this->MERIDE_URL = "http://dev7.meride.tv/webink";
-        $this->MERIDE_AUTH_CODE = "EtJaOVJxaNoefxiT6lBNza9h8XhQBis5C15gNFEOiTSog18cczQCAQKyDRf50x";
+        $this->MERIDE_URL = getenv('MERIDE_URL');
+        $this->MERIDE_AUTH_CODE = getenv('MERIDE_AUTH_CODE');
         $this->MERIDE_VERSION = "v2";
     }
     /**

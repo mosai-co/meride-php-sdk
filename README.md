@@ -13,6 +13,12 @@ The packages included are:
 
 `composer install`
 
+### TESTING
+
+1. create MERIDE_URL environment on the system with `export MERIDE_URL="{{URL}}"` where URL will be the CMS to test (e.g. http://dev7.meride.tv/webink)
+2. create MERIDE_AUTH_CODE environment on the system with `export MERIDE_AUTH_CODE="{{AUTH_CODE}}"` where AUTH_CODE will be the authorization code to call the API
+3. launch `./testall.sh` from the root directory of the project
+
 ### DOCUMENTATION GENERATION
 
 To see the documentation of the project launch this from the command line and access to the docs/ directory with a browser

@@ -53,7 +53,7 @@ final class MerideTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $videoResponse->jsonContent);
     }
 
-    public function __testGetVideoHasContent()
+    public function testGetVideoHasContent()
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
         $videoResponse = $api->get("video", $this->TEST_ID);

@@ -13,6 +13,8 @@ namespace Meride;
 
 use Meride\Network\Request;
 use Meride\Network\Response;
+use Meride\MerideCollection;
+use Meride\MerideEntity;
 /**
  * Interface/SDK of Meride's REST APIs
  * REST API documentation at: www.meride.tv/docs/api/
@@ -62,7 +64,15 @@ class Api
      */
     public function read($entityName, $id = null, array $params = [])
     {
-        return $this->request->get($entityName, $id, $params);
+        $response = $this->request->get($entityName, $id, $params);
+        if (!empty($response->error))
+        {
+            return $response->error;
+        } else if (isset($response->jsonContent)) {
+            return new MerideEntity($response);
+        } else {
+            return null;
+        }
     }
     /**
      * @alias Api::read
@@ -70,6 +80,24 @@ class Api
     public function get($entityName, $id = null, array $params = [])
     {
         return $this->read($entityName, $id, $params);
+    }
+    /**
+     * Reads a list of objects of the given entity type
+     * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
+     * @param Array $params An associative array to transorm to GET parameters
+     * @return Network\Response The response for the object/error
+     */
+    public function all($entityName, array $params = [])
+    {
+        $response = $this->request->all($entityName, $params);
+        if (!empty($response->error))
+        {
+            return $response->error;
+        } else if (isset($response->jsonContent) && isset($response->jsonContent->data)) {
+            return new MerideCollection($response->jsonContent->data);
+        } else {
+            return new MerideCollection([]);
+        }
     }
     /**
      * Updates the object of the given entity type with the given id
@@ -99,5 +127,18 @@ class Api
     {
         return $this->request->delete($entityName, $id);
     }
-
+    /**
+     * Search method. Whan called search parameters should be passed instead of the read ones.
+     * The method will not check if the parameters are part of the search feature.
+     * @alias Api::all
+     */
+    public function search($entityName, array $params = [])
+    {
+        return $this->all($entityName, $params);
+    }
+    
+    /*protected function getServiceClass($name)
+    {
+        return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;
+    }*/
 }

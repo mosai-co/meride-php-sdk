@@ -12,7 +12,7 @@ class Response {
     public $content = null;
     public $jsonContent = null;
     public $httpCode = null;
-    public $errors = array();
+    public $error = null;
     /**
      * Response constructor
      * @param string $content The response content

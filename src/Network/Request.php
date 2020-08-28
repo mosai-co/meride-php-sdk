@@ -143,6 +143,19 @@ class Request
         return $this->request($resource, 'GET');
     }
     /**
+     * Reads a list of objects of the given entity type
+     * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
+     * @param Array $params An associative array to transorm to GET parameters
+     * @return Network\Response The response for the object/error
+     */
+    public function all($entityName, array $params) {
+        $resource = $entityName.".json";
+        if (!empty($params)) {
+            $resource .= '?'.http_build_query($params);
+        }
+        return $this->request($resource, 'GET');
+    }
+    /**
      * Updates the object of the given entity type with the given id
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param String|\Number $id The id of the desired object to update

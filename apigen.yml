@@ -1,6 +1,7 @@
 parameters:
     visibility_levels: [public, protected] # array
-    annotation_groups: [todo, deprecated] # array
+    annotation_groups: [] # array
     title: "Meride PHP SDK Docs" # string
     base_url: "http://www.meride.tv/docs" # string
     overwrite: false # bool
+    theme_directory: apigen_docs_theme/src # path to theme's config file

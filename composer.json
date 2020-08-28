@@ -27,7 +27,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Meride\\": "src/"
+            "Meride\\": "src/",
+            "Meride\\Model\\": "src/Model"
         }
     },
     "autoload-dev": {

@@ -11,17 +11,19 @@ use Meride\Network\Error;
 class Response {
     public $content = null;
     public $jsonContent = null;
+    public $httpCode = null;
     public $errors = array();
     /**
      * Response constructor
      * @param string $content The response content
-     * @param Meride\Network\Error $error The error return by the REST API
+     * @param Meride\Network\Error $error The error returned by the REST API
      */
-    public function __construct($content, $error = false)
+    public function __construct($content, $error = false, $httpCode = null)
     {
         $this->content = $content;
         $this->jsonContent = json_decode($content);
         $this->error = $error;
+        $this->httpCode = $httpCode;
     }
     /**
      * Returns the number of elements of the response

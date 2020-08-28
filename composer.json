@@ -2,11 +2,21 @@
     "name": "mosaicolab/meride-php-lib",
     "description": "Libraries to interact with Meride platform",
     "type": "library",
+    "keywords": [
+        "Mosaico",
+        "SDK",
+        "api"
+    ],
+    "homepage": "https://www.meride.tv/docs",
     "license": "proprietary",
     "authors": [
         {
             "name": "MosaicoDevTeam",
-            "email": "giovanni.toppi@mosaicolab.com"
+            "email": "support@mosai.co"
+        },
+        {
+            "name": "Giovanni Manuel Toppi",
+            "email": "giovanni.toppi@mosai.co"
         }
     ],
     "require-dev": {

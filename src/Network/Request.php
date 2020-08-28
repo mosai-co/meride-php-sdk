@@ -187,7 +187,7 @@ class Request
         {
             $resourceURL = $this->authURL.'rest/'.$this->version."/".$resource;
         }
-        $ch = curl_init();
+        $curlHandle = curl_init();
         $headers = array(
             'Accept: application/json',
             'access-token: ' . $this->token->accessToken,
@@ -195,21 +195,34 @@ class Request
         $verb = strtoupper($verb);
         if (in_array($verb, array('POST', 'PUT', 'DELETE')))
         {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'POST');
         }
         if ($verb == "PUT" or $verb == "DELETE")
         {
             $headers[] = "X-HTTP-Method-Override: ".$verb;
         }
         if (($verb == 'PUT' or $verb == 'POST') and !empty($params)) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $params);
         }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_URL, $resourceURL);
-        $content = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curlHandle, CURLOPT_URL, $resourceURL);
+        $content = curl_exec($curlHandle);
+        $httpCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
+        $responseHeaders = [];
+        $headerCallback = function ($curl, $header_line) use (&$responseHeaders) {
+            // Ignore the HTTP request line (HTTP/1.1 200 OK)
+            if (false === \strpos($header_line, ':')) {
+                return \strlen($header_line);
+            }
+            list($key, $value) = \explode(':', \trim($header_line), 2);
+            $responseHeaders[\trim($key)] = \trim($value);
+
+            return \strlen($header_line);
+        };
+        curl_setopt($curlHandle, CURLOPT_HEADERFUNCTION, $headerCallback);
+        curl_close($curlHandle);
+        
         if ($verb == 'DELETE')
         {
             $res = json_decode($content);
@@ -218,11 +231,11 @@ class Request
         {
             $res = $content;
         }
-        if (isset($res->errors) || !$res || (int)$httpcode >= 400)
+        if (isset($res->errors) || !$res || (int)$httpCode >= 400)
         {
-            return new Response(false, new Error($httpcode, self::getErrorString($res)));
+            return new Response(false, new Error($httpCode, self::getErrorString($res)), $httpCode);
         }
-        return ($res) ? new Response($res, false) :  new Response(array(), false);
+        return ($res) ? new Response($res, false, $httpCode) :  new Response(array(), false, $httpCode);
     }
 
     

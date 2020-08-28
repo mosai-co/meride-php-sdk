@@ -5,7 +5,7 @@ use Meride\Api;
 
 define('MERIDE_URL', "http://dev7.meride.tv/webink");
 define('MERIDE_VERSION', 'v2');
-define('MERIDE_ACCESS_TOKEN', "EtJaOVJxaNoefxiT6lBNza9h8XhQBis5C15gNFEOiTSog18cczQCAQKyDRf50x");
+define('MERIDE_ACCESS_TOKEN', getenv('MERIDE_AUTH_CODE'));
 
 
 $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);

@@ -19,32 +19,34 @@ class Embed
      * Gives back an URL that SHOULD be the one to use inside Meride as the main javascript.
      * However is always better to rely on the one that is visible inside Meride's CMS
      * @param string $clientID the ID of the client
+     * @param string $version Meride version to use (default v2)
      * @return string
      */
-    public static function presumeBaseURL($clientID)
+    public static function presumeBaseURL($clientID, $version = 'v2')
     {
-        return 'https://media'.$clientID.'-meride-tv.akamaized.net';
+        return $version === 'v1' ? 'https://media'.$clientID.'-meride-tv.akamaized.net' : 'https://data.meride.tv';
     }
     /**
      * Gives back an URL that SHOULD be the one to use as the base URL of the iframe.
      * However is always better to rely on the one that is visible inside Meride's CMS
      * @param string $clientID the ID of the embed
+     * @param string $version Meride version to use (default v2)
      * @return string
      */
-    public static function presumeBaseIframeURL($clientID)
+    public static function presumeBaseIframeURL($clientID, $version = 'v2')
     {
-        return 'https://media'.$clientID.'-meride-tv.akamaized.net/proxy/iframe.php';
+        return $version === 'v1' ? 'https://media'.$clientID.'-meride-tv.akamaized.net/proxy/iframe.php' : 'https://data.meride.tv/proxy/iframe.php';
     }
     /**
      * Gives back an URL that SHOULD be the one to use as iframe for the embed.
      * However is always better to rely on the one that is visible inside Meride's CMS
-     * @param array $params an array composed of cliendID, embedID and BulkLabel
-     * @param string $clientID the ID of the embed
+     * @param array $params an array composed of clientID, embedID and bulkLabel
+     * @param string $version Meride version to use (default v2)
      * @return string
      */
-    public static function presumeIframeURL($params)
+    public static function presumeIframeURL($params, $version = 'v2')
     {
-        $url = 'https://media'.$params['clientID'].'-meride-tv.akamaized.net/proxy/iframe.php/'.$params['embedID'].'/'.$params['clientID'];
+        $url = $version === 'v1' ? 'https://media'.$params['clientID'].'-meride-tv.akamaized.net/proxy/iframe.php/'.$params['embedID'].'/'.$params['clientID'] : 'https://data.meride.tv/proxy/iframe.php/'.$params['embedID'].'/'.$params['clientID'];
         if (!empty($params['bulkLabel']))
         {
             $url .= '/'.$params['bulkLabel'];
@@ -55,11 +57,12 @@ class Embed
      * Gives back an URL that SHOULD be the one to use as main javascript file for Meride.
      * However is always better to rely on the one that is visible inside Meride's CMS
      * @param string $clientID the ID of the embed
+     * @param string $version Meride version to use (default v2)
      * @return string
      */
-    public static function presumeScriptURL($clientID)
+    public static function presumeScriptURL($clientID, $version = 'v2')
     {
-        return 'https://media'.$clientID.'-meride-tv.akamaized.net/scripts/latest/embed.js';
+        return $version === 'v1' ? 'https://media'.$clientID.'-meride-tv.akamaized.net/scripts/latest/embed.js' : 'https://data.meride.tv/scripts/latest/embed.js';
     }
     /**
      * Gives back the HTML code of Meride's iframe

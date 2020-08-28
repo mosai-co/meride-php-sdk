@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Meride\Api;
+use Meride\MerideEntity;
 
 final class MerideTest extends TestCase
 {
@@ -30,11 +31,10 @@ final class MerideTest extends TestCase
     public function testGetVideoWithLimit1Counts1()
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
-        $videosResponse = $api->get("video", null, array(
+        $videos = $api->search("video", array(
             'search_page' => 1,
             'search_for_page' => 1
         ));
-        $videos = $videosResponse->jsonContent->data;
         $this->assertCount(1, $videos);
     }
 
@@ -42,7 +42,7 @@ final class MerideTest extends TestCase
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_1);
         $videoResponse = $api->get("video", $this->TEST_ID);
-        $this->assertInstanceOf(stdClass::class, $videoResponse->jsonContent);
+        $this->assertInstanceOf('Meride\MerideEntity', $videoResponse);
         
     }
 
@@ -50,13 +50,13 @@ final class MerideTest extends TestCase
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
         $videoResponse = $api->get("video", $this->TEST_ID);
-        $this->assertInstanceOf(stdClass::class, $videoResponse->jsonContent);
+        $this->assertInstanceOf('Meride\MerideEntity', $videoResponse);
     }
 
     public function testGetVideoHasContent()
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
         $videoResponse = $api->get("video", $this->TEST_ID);
-        $this->assertNotEmpty($videoResponse->content);
+        $this->assertEquals($this->TEST_ID, $videoResponse->id);
     }
 }

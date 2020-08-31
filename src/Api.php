@@ -39,6 +39,40 @@ class Api
         $this->request->init($authCode, $authURL, $version);
     }
     /**
+     * Produces a MerideEntity from a Meride\Network\Response
+     *
+     * @param Meride\Network\Response $originalResponse
+     * @return mixed $response if some error exists Meride\Network\Response otherwise Meride\MerideEntity. If there is an empty response it will return null
+     */
+    private function entity(Network\Response $originalResponse)
+    {
+        if (!empty($originalResponse->error))
+        {
+            return $originalResponse->error;
+        } else if (isset($originalResponse->jsonContent)) {
+            return new MerideEntity($originalResponse);
+        } else {
+            return null;
+        }
+    }
+    /**
+     * Produces a MerideCollection from a Meride\Network\Response
+     *
+     * @param Meride\Network\Response $originalResponse
+     * @return mixed $response if some error exists Meride\Network\Response otherwise Meride\MerideEntity. If there is an empty response it will return null
+     */
+    private function collection(Network\Response $originalResponse)
+    {
+        if (!empty($originalResponse->error))
+        {
+            return $originalResponse->error;
+        } else if (isset($originalResponse->jsonContent) && isset($originalResponse->jsonContent->data)) {
+            return new MerideCollection($originalResponse->jsonContent->data);
+        } else {
+            return new MerideCollection([]);
+        }
+    }
+    /**
      * Creates a new object of the given entity type
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param Array $values An associative array of the data to assign to the new object
@@ -46,7 +80,8 @@ class Api
      */
     public function create($entityName, $values)
     {
-        return $this->request->post($entityName, $values);
+        $response = $this->request->post($entityName, $values);
+        return $this->entity($response);
     }
     /**
      * @alias Api::create
@@ -65,14 +100,7 @@ class Api
     public function read($entityName, $id = null, array $params = [])
     {
         $response = $this->request->get($entityName, $id, $params);
-        if (!empty($response->error))
-        {
-            return $response->error;
-        } else if (isset($response->jsonContent)) {
-            return new MerideEntity($response);
-        } else {
-            return null;
-        }
+        return $this->entity($response);
     }
     /**
      * @alias Api::read
@@ -90,14 +118,7 @@ class Api
     public function all($entityName, array $params = [])
     {
         $response = $this->request->all($entityName, $params);
-        if (!empty($response->error))
-        {
-            return $response->error;
-        } else if (isset($response->jsonContent) && isset($response->jsonContent->data)) {
-            return new MerideCollection($response->jsonContent->data);
-        } else {
-            return new MerideCollection([]);
-        }
+        return $this->collection($response);
     }
     /**
      * Updates the object of the given entity type with the given id
@@ -108,7 +129,8 @@ class Api
      */
     public function update($entityName, $id, $values)
     {
-        return $this->request->put($entityName, $id, $values);
+        $response = $this->request->put($entityName, $id, $values);
+        return $this->entity($response);
     }
     /**
      * @alias Api::update

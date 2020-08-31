@@ -24,7 +24,7 @@ $video = $merideApi->request('getVideo', array(
 ));*/
 //$video = $merideApi->delete('video', 735);
 //$videoResponse = $merideApi->get('category');
-$videoResponse = $merideApi->get('embed', 1701);
+$videoResponse = $merideApi->get('video', 1128);
 
 /*$videoResponse = $merideApi->create('categoria', array(
     'titolo' => "Test update8",
@@ -56,19 +56,6 @@ $videoResponse = $merideApi->create('video', array(
  */
 
 
-echo "CONTENT\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->content);
-echo "</pre>";
-echo "JSON CONTENT\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->jsonContent);
-echo "</pre>";
-echo "JSON CONTENT COUNT\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->count());
-echo "</pre>";
-echo "\r\n========\r\ERROR\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->error);
-echo "</pre>";
+echo var_dump($videoResponse);
+echo "\r\n========\r\n";
+echo "title: ".$videoResponse->title;

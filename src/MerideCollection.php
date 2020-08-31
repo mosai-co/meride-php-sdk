@@ -8,6 +8,7 @@ class MerideCollection extends MerideObject implements \Countable, \IteratorAggr
 {
     public function __construct($data = [])
     {
+        $dataCopy = [];
         if (is_array($data)) {
             $dataArrayObject = new \ArrayObject($data);
             $dataCopy = $dataArrayObject->getArrayCopy();

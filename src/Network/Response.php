@@ -37,4 +37,13 @@ class Response {
         }
         return 0;
     }
+    /**
+     * Returns if the API response is empty (without considering the error)
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->content) AND empty($this->jsonContent);
+    }
 }

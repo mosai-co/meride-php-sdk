@@ -35,4 +35,22 @@ class MerideEntity extends MerideObject
     {
         return $this->apiResponse;
     }
+    /**
+     * Returns true if the original API response contains errors, false otherwise
+     *
+     * @return  boolean
+     */ 
+    public function hasErrors()
+    {
+        return !empty($this->apiResponse->error);
+    }
+    /**
+     * @see Meride\Network\Response::isEmpty
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return $this->apiResponse->isEmpty();
+    }
 }

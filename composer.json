@@ -16,7 +16,8 @@
         },
         {
             "name": "Giovanni Manuel Toppi",
-            "email": "giovanni.toppi@mosai.co"
+            "email": "giovanni.toppi@mosai.co",
+            "role": "Developer"
         }
     ],
     "require-dev": {
@@ -27,8 +28,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Meride\\": "src/",
-            "Meride\\Model\\": "src/Model"
+            "Meride\\": "src/"
         }
     },
     "autoload-dev": {

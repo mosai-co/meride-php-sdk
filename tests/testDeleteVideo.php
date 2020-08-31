@@ -12,7 +12,7 @@ define('MERIDE_ACCESS_TOKEN', getenv('MERIDE_AUTH_CODE'));
 
 $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
 
-$videoResponse = $merideApi->read('video', 1126);
+$videoResponse = $merideApi->read('video', 1141);
 
 $videoDeleteResponse = $merideApi->delete('video', $videoResponse->id);
 

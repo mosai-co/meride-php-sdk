@@ -29,17 +29,5 @@ unlink($videoCopyRenamed);
 
 echo "CONTENT\r\n========\r\n";
 echo "<pre>";
-echo var_dump($videoResponse->content);
-echo "</pre>";
-echo "JSON CONTENT\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->jsonContent);
-echo "</pre>";
-echo "JSON CONTENT COUNT\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->count());
-echo "</pre>";
-echo "\r\n========\r\ERROR\r\n========\r\n";
-echo "<pre>";
-echo var_dump($videoResponse->error);
+echo var_dump($videoResponse);
 echo "</pre>";

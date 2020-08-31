@@ -46,14 +46,7 @@ class Api
      */
     private function entity(Network\Response $originalResponse)
     {
-        if (!empty($originalResponse->error))
-        {
-            return $originalResponse->error;
-        } else if (isset($originalResponse->jsonContent)) {
-            return new MerideEntity($originalResponse);
-        } else {
-            return null;
-        }
+        return new MerideEntity($originalResponse);
     }
     /**
      * Produces a MerideCollection from a Meride\Network\Response
@@ -63,14 +56,7 @@ class Api
      */
     private function collection(Network\Response $originalResponse)
     {
-        if (!empty($originalResponse->error))
-        {
-            return $originalResponse->error;
-        } else if (isset($originalResponse->jsonContent) && isset($originalResponse->jsonContent->data)) {
-            return new MerideCollection($originalResponse->jsonContent->data);
-        } else {
-            return new MerideCollection([]);
-        }
+        return new MerideCollection($originalResponse);
     }
     /**
      * Creates a new object of the given entity type

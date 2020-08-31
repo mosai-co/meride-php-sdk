@@ -2,7 +2,7 @@
 
 namespace Meride\Model;
 
-class Meride {
+class BaseModel {
     public static function factory($modelName, $data)
     {
         $model = 'Meride\Model\\'.ucfirst($modelName);

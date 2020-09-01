@@ -67,7 +67,7 @@ class MerideCollection extends MerideObject implements \Countable, \IteratorAggr
      */ 
     public function hasErrors()
     {
-        return !empty($this->apiResponse->error);
+        return $this->apiResponse->hasErrors();
     }
     /**
      * @see Meride\Network\Response::isEmpty

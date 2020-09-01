@@ -38,6 +38,15 @@ class Response {
         return 0;
     }
     /**
+     * Returns true if the original API response contains errors, false otherwise
+     *
+     * @return  boolean
+     */ 
+    public function hasErrors()
+    {
+        return !empty($this->error);
+    }
+    /**
      * Returns if the API response is empty (without considering the error)
      *
      * @return boolean

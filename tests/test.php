@@ -26,6 +26,11 @@ $video = $merideApi->request('getVideo', array(
 //$videoResponse = $merideApi->get('category');
 $videoResponse = $merideApi->get('video', 1128);
 
+echo var_dump($videoResponse->hasErrors());
+echo var_dump($videoResponse->getApiResponse());
+echo var_dump($videoResponse->isEmpty());
+die();
+
 /*$videoResponse = $merideApi->create('categoria', array(
     'titolo' => "Test update8",
     'father_id' => 1,

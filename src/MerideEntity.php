@@ -42,7 +42,7 @@ class MerideEntity extends MerideObject
      */ 
     public function hasErrors()
     {
-        return !empty($this->apiResponse->error);
+        return $this->apiResponse->hasErrors();
     }
     /**
      * @see Meride\Network\Response::isEmpty

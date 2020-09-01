@@ -24,6 +24,7 @@ class Api
 {
     /**
      * Reference to Meride\Network\Request
+     * @var Meride\Network\Request
      * @private
      */
     private $request = null;
@@ -143,6 +144,15 @@ class Api
     public function search($entityName, array $params = [])
     {
         return $this->all($entityName, $params);
+    }
+    /**
+     * Returns the current authentication token
+     *
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return empty($this->request) ? null : $this->request->getToken();
     }
     
     /*protected function getServiceClass($name)

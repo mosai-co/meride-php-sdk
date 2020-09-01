@@ -250,6 +250,13 @@ class Request
         }
         return ($res) ? new Response($res, false, $httpCode) :  new Response(array(), false, $httpCode);
     }
-
-    
+    /**
+     * Get reference to the Token object
+     *
+     * @return  Meride\Network\Token
+     */ 
+    public function getToken()
+    {
+        return $this->token;
+    }
 }

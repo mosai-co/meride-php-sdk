@@ -9,6 +9,10 @@ define('MERIDE_ACCESS_TOKEN', getenv('MERIDE_AUTH_CODE'));
 
 
 $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
+$token = $merideApi->getToken();
+echo var_dump($token);
+
+echo "\r\n\r\n";
 
 
 

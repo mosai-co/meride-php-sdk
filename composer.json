@@ -1,5 +1,5 @@
 {
-    "name": "mosaicolab/meride-php-lib",
+    "name": "mosaico/meride-public-php-libs",
     "description": "Libraries to interact with Meride platform",
     "type": "library",
     "keywords": [

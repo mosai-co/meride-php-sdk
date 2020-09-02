@@ -39,5 +39,8 @@
     "prefer-stable": true,
     "archive": {
         "exclude": ["/tests", "bitbucket-pipelines.yml"]
+    },
+    "require": {
+        "ankitpokhrel/tus-php": "^1.2"
     }
 }

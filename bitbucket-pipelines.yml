@@ -35,9 +35,3 @@ pipelines:
             - export MERIDE_AUTH_USER=$MERIDE_AUTH_USER
             - export MERIDE_VIDEO_ID=$MERIDE_VIDEO_ID
             - ./testall.sh
-      - step:
-          name: Deploy to composer.meride.tv
-          deployment: production
-          script:
-            - apt-get update && apt-get install -y wget
-            - wget -O/dev/null -q https://composer.meride.tv/webhook.php?package=mosaicolab/meride-public-php-libs

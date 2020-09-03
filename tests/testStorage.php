@@ -5,27 +5,30 @@ use Meride\Api;
 use Meride\Storage\Tus\Client as TusClient;
 use Meride\Storage\Tus\Token;
 
-define('MERIDE_URL', "http://dev7.meride.tv/webink");
+define('MERIDE_URL', getenv('MERIDE_URL'));
 define('MERIDE_VERSION', 'v2');
 define('MERIDE_ACCESS_TOKEN', getenv('MERIDE_AUTH_CODE'));
 
+$randNum = rand(0, 999999);
 $videoOrigin = __DIR__."/assets/small.mp4";
+$videoCopyRenamed = __DIR__."/assets/small".$randNum.".mp4";
 
-
-
-//$merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
-$tokenGenerator = new Token('webink', getenv('MERIDE_AUTH_CODE'));
+$tokenGenerator = new Token('wls', getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
 try {
     $token = $tokenGenerator->generate();
 } catch(\Exception $e) {
-    die($e->getMessage()."\r\n");
+    echo $e->getMessage()."\r\n";
 }
 
-$tusClient = new TusClient(
-    $token
-);
+$tusClient = new TusClient($token, getenv('MERIDE_STORAGESERVICE_URL'));
 $tusClient->setProtocol("http");
-$uploadUrl = $tusClient->upload($videoOrigin, 'smaller.mp4');
+try {
+    copy($videoOrigin, $videoCopyRenamed);
+    $uploadUrl = $tusClient->upload($videoCopyRenamed, 'smaller'.$randNum.'.mp4');
+} catch (\Exception $e) {
+    unlink($videoCopyRenamed);
+    echo $e->getMessage()."\r\n";
+}
 if ($uploadUrl !== false) {
     echo "\r\nUploaded ".$uploadUrl;
     $extractedUrl = $tusClient->extractURL($uploadUrl);
@@ -33,10 +36,11 @@ if ($uploadUrl !== false) {
     $merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
     $videoResponse = $merideApi->create('video', array(
         'title' => "Test video",
-        'video' => $extractedUrl
+        'video' => $extractedUrl,
+        'squeeze_slot' => 'newdev'
     ));
     echo var_dump($videoResponse);
 } else {
     echo "Some error occured";
 }
-
+@unlink($videoCopyRenamed);

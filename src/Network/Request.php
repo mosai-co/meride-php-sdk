@@ -120,7 +120,11 @@ class Request
         }
         foreach ($res->errors as $key => $message)
         {
-            $messaggio .= $key . " - " . $message . PHP_EOL;
+            if (is_array($message)) {
+                $messaggio .= $key . ": " . \implode(", ", $message) . " || " . PHP_EOL;
+            } else {
+                $messaggio .= $key . ": " . $message . " || " . PHP_EOL;
+            }
         }
         return $messaggio;
     }
@@ -246,7 +250,14 @@ class Request
         }
         if (isset($res->errors) || !$res || (int)$httpCode >= 400)
         {
-            return new Response(false, new Error($httpCode, self::getErrorString($res)), $httpCode);
+            $_errors = new \stdClass;
+            if (isset($res->errors)) {
+                $_errors = $res->errors;
+            } else if (is_string($res)) {
+                $jsonRes = json_decode($res, true);
+                $_errors->errors = $jsonRes['error']['message'];
+            }
+            return new Response(false, new Error(self::getErrorString($_errors), $httpCode), $httpCode);
         }
         return ($res) ? new Response($res, false, $httpCode) :  new Response(array(), false, $httpCode);
     }

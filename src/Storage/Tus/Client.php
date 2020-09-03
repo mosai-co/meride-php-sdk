@@ -78,7 +78,8 @@ class Client {
      */
     public function upload(String $inputFilePath, String $outputFileName)
     {
-        $key = hash_file('md5', $inputFilePath);
+        //$key = hash_file('md5', $inputFilePath);
+        $key = md5($inputFilePath);
         // setting the key is a mandatory step
         $this->tusClient->setKey($key);
         // upload the file
@@ -86,7 +87,7 @@ class Client {
             $this->tusClient->file($inputFilePath, $outputFileName)->upload();
         } catch (\Exception $e)
         {
-            return false;
+            throw $e;
         }
         return $this->tusClient->getUrl();
     }

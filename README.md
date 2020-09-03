@@ -20,8 +20,9 @@ The packages included are:
 
 ### TESTING
 
-1. create MERIDE_URL environment on the system with `export MERIDE_URL="{{URL}}"` where URL will be the CMS to test (e.g. http://dev7.meride.tv/webink)
-2. create MERIDE_AUTH_CODE environment on the system with `export MERIDE_AUTH_CODE="{{AUTH_CODE}}"` where AUTH_CODE will be the authorization code to call the API
+1. create MERIDE_URL environment on the system with `export MERIDE_URL="{{URL}}"` where {{URL}} will be the CMS to test (e.g. http://dev7.meride.tv/webink)
+2. create MERIDE_AUTH_CODE environment on the system with `export MERIDE_AUTH_CODE="{{AUTH_CODE}}"` where {{AUTH_CODE}} will be the authorization code to call the API
+3. create MERIDE_STORAGESERVICE_URL environment on the system with `export MERIDE_STORAGESERVICE_URL="{{STORAGESERVICE_URL}}"` where {{STORAGESERVICE_URL}} is the address (base URL) of the storage service
 3. launch `./testall.sh` from the root directory of the project
 
 ### DOCUMENTATION GENERATION

@@ -20,4 +20,13 @@ class Error {
         $this->message = $message;
         $this->errorCode = $errorCode;
     }
+    /**
+     * String rendering of the Error
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->message." - ".$this->errorCode;
+    }
 }

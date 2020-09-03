@@ -118,9 +118,22 @@ class Request
         {
             return false;
         }
+        if (\is_string($res)) {
+            return $res;
+        }
+        if (\is_object($res) && is_string($res->errors)) {
+            return $res->errors;
+        }
+        if (\is_array($res) && is_string($res['errors'])) {
+            return $res['errors'];
+        }
         foreach ($res->errors as $key => $message)
         {
-            $messaggio .= $key . " - " . $message . PHP_EOL;
+            if (is_array($message)) {
+                $messaggio .= $key . ": " . \implode(", ", $message) . " || " . PHP_EOL;
+            } else {
+                $messaggio .= $key . ": " . $message . " || " . PHP_EOL;
+            }
         }
         return $messaggio;
     }
@@ -137,6 +150,19 @@ class Request
         {
             $resource = $entityName."/".$id.".json";
         }
+        if (!empty($params)) {
+            $resource .= '?'.http_build_query($params);
+        }
+        return $this->request($resource, 'GET');
+    }
+    /**
+     * Reads a list of objects of the given entity type
+     * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
+     * @param Array $params An associative array to transorm to GET parameters
+     * @return Network\Response The response for the object/error
+     */
+    public function all($entityName, array $params) {
+        $resource = $entityName.".json";
         if (!empty($params)) {
             $resource .= '?'.http_build_query($params);
         }
@@ -169,6 +195,33 @@ class Request
      */
     public function post($entityName, $values) {
         return $this->request($entityName.".json", 'POST', $values);
+    }
+    /**
+     * Adjusts the errors trying to cover all the cases that comes back from Meride platform
+     *
+     * @param mixed $res The network response
+     * @param int $httpCode The HTTP code response
+     * @return object
+     */
+    private function prepareErrors($res, $httpCode) {
+        $_errors = new \stdClass;
+        if (is_object($res) && isset($res->errors)) {
+            $_errors = $res->errors;
+        } else if (is_string($res)) {
+            $jsonRes = json_decode($res, true);
+            if (is_string($jsonRes)) {
+                $_errors->errors = [
+                    $httpCode => $jsonRes
+                ];
+            } else if (is_array($jsonRes) && isset($jsonRes['error']) && isset($jsonRes['error']['message'])) {
+                $_errors->errors = $jsonRes['error']['message'];
+            } else {
+                $_errors->errors = [
+                    'generic' => 'Some error was generated but there are no details'
+                ];
+            }
+        }
+        return $_errors;
     }
     /**
      * Performs a request to the REST API service
@@ -233,7 +286,8 @@ class Request
         }
         if (isset($res->errors) || !$res || (int)$httpCode >= 400)
         {
-            return new Response(false, new Error($httpCode, self::getErrorString($res)), $httpCode);
+            $_errors = $this->prepareErrors($res, $httpCode);
+            return new Response(false, new Error(self::getErrorString($_errors), $httpCode), $httpCode);
         }
         return ($res) ? new Response($res, false, $httpCode) :  new Response(array(), false, $httpCode);
     }

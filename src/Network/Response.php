@@ -12,7 +12,7 @@ class Response {
     public $content = null;
     public $jsonContent = null;
     public $httpCode = null;
-    public $errors = array();
+    public $error = null;
     /**
      * Response constructor
      * @param string $content The response content
@@ -36,5 +36,23 @@ class Response {
             return count($this->jsonContent);
         }
         return 0;
+    }
+    /**
+     * Returns true if the original API response contains errors, false otherwise
+     *
+     * @return  boolean
+     */ 
+    public function hasErrors()
+    {
+        return !empty($this->error);
+    }
+    /**
+     * Returns if the API response is empty (without considering the error)
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->content) AND empty($this->jsonContent);
     }
 }

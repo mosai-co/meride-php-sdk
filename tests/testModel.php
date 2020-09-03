@@ -2,6 +2,8 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Meride\Api;
+use Meride\MerideCollection;
+use Meride\Model\Meride;
 
 define('MERIDE_URL', getenv('MERIDE_URL'));
 define('MERIDE_VERSION', 'v2');
@@ -24,12 +26,19 @@ $video = $merideApi->request('getVideo', array(
 ));*/
 //$video = $merideApi->delete('video', 735);
 //$videoResponse = $merideApi->get('category');
-$videoResponse = $merideApi->get('video', 1128);
-
-echo var_dump($videoResponse->hasErrors());
-echo var_dump($videoResponse->getApiResponse());
-echo var_dump($videoResponse->isEmpty());
+$bulkConfigurations = $merideApi->all('bulk');
+foreach($bulkConfigurations as $bulk) {
+    echo $bulk->id."\r\n";
+}
+print_r($bulkConfigurations[0]->title);
 die();
+$response = $merideApi->get('video', 919);
+print_r($response);
+echo "\r\n========\r\n";
+print_r($response->getApiResponse());
+echo "\r\n========\r\n";
+print_r($response['id']);
+//$video = Meride::factory('video', $videoResponse->jsonContent);
 
 /*$videoResponse = $merideApi->create('categoria', array(
     'titolo' => "Test update8",
@@ -60,7 +69,19 @@ $videoResponse = $merideApi->create('video', array(
  * $param['video'] = $file;
  */
 
-
-echo var_dump($videoResponse);
-echo "\r\n========\r\n";
-echo "title: ".$videoResponse->title;
+/*echo "CONTENT\r\n========\r\n";
+echo "<pre>";
+echo var_dump($videoResponse->content);
+echo "</pre>";
+echo "JSON CONTENT\r\n========\r\n";
+echo "<pre>";
+echo var_dump($videoResponse->jsonContent);
+echo "</pre>";
+echo "JSON CONTENT COUNT\r\n========\r\n";
+echo "<pre>";
+echo var_dump($videoResponse->count());
+echo "</pre>";
+echo "\r\n========\r\ERROR\r\n========\r\n";
+echo "<pre>";
+echo var_dump($videoResponse->error);
+echo "</pre>";*/

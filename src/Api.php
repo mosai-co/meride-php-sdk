@@ -13,6 +13,8 @@ namespace Meride;
 
 use Meride\Network\Request;
 use Meride\Network\Response;
+use Meride\MerideCollection;
+use Meride\MerideEntity;
 /**
  * Interface/SDK of Meride's REST APIs
  * REST API documentation at: www.meride.tv/docs/api/
@@ -37,6 +39,26 @@ class Api
         $this->request->init($authCode, $authURL, $version);
     }
     /**
+     * Produces a MerideEntity from a Meride\Network\Response
+     *
+     * @param Meride\Network\Response $originalResponse
+     * @return mixed $response if some error exists Meride\Network\Response otherwise Meride\MerideEntity. If there is an empty response it will return null
+     */
+    private function entity(Network\Response $originalResponse)
+    {
+        return new MerideEntity($originalResponse);
+    }
+    /**
+     * Produces a MerideCollection from a Meride\Network\Response
+     *
+     * @param Meride\Network\Response $originalResponse
+     * @return mixed $response if some error exists Meride\Network\Response otherwise Meride\MerideEntity. If there is an empty response it will return null
+     */
+    private function collection(Network\Response $originalResponse)
+    {
+        return new MerideCollection($originalResponse);
+    }
+    /**
      * Creates a new object of the given entity type
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param Array $values An associative array of the data to assign to the new object
@@ -44,7 +66,8 @@ class Api
      */
     public function create($entityName, $values)
     {
-        return $this->request->post($entityName, $values);
+        $response = $this->request->post($entityName, $values);
+        return $this->entity($response);
     }
     /**
      * @alias Api::create
@@ -62,7 +85,8 @@ class Api
      */
     public function read($entityName, $id = null, array $params = [])
     {
-        return $this->request->get($entityName, $id, $params);
+        $response = $this->request->get($entityName, $id, $params);
+        return $this->entity($response);
     }
     /**
      * @alias Api::read
@@ -70,6 +94,17 @@ class Api
     public function get($entityName, $id = null, array $params = [])
     {
         return $this->read($entityName, $id, $params);
+    }
+    /**
+     * Reads a list of objects of the given entity type
+     * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
+     * @param Array $params An associative array to transorm to GET parameters
+     * @return Network\Response The response for the object/error
+     */
+    public function all($entityName, array $params = [])
+    {
+        $response = $this->request->all($entityName, $params);
+        return $this->collection($response);
     }
     /**
      * Updates the object of the given entity type with the given id
@@ -80,7 +115,8 @@ class Api
      */
     public function update($entityName, $id, $values)
     {
-        return $this->request->put($entityName, $id, $values);
+        $response = $this->request->put($entityName, $id, $values);
+        return $this->entity($response);
     }
     /**
      * @alias Api::update
@@ -99,5 +135,18 @@ class Api
     {
         return $this->request->delete($entityName, $id);
     }
-
+    /**
+     * Search method. Whan called search parameters should be passed instead of the read ones.
+     * The method will not check if the parameters are part of the search feature.
+     * @alias Api::all
+     */
+    public function search($entityName, array $params = [])
+    {
+        return $this->all($entityName, $params);
+    }
+    
+    /*protected function getServiceClass($name)
+    {
+        return \array_key_exists($name, self::$classMap) ? self::$classMap[$name] : null;
+    }*/
 }

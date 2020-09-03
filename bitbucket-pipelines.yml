@@ -5,6 +5,8 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: php:7.4.1
 
+clone:
+  depth: full
 pipelines:
   default:
     - step:
@@ -35,3 +37,8 @@ pipelines:
             - export MERIDE_AUTH_USER=$MERIDE_AUTH_USER
             - export MERIDE_VIDEO_ID=$MERIDE_VIDEO_ID
             - ./testall.sh
+      - step:
+          name: Deploy to packagist
+          deployment: production
+          script:
+            - git push --mirror git@github.com:YourOrg/mirror-repo.git

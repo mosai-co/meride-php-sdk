@@ -6,12 +6,17 @@ The packages included are:
 
 - **Api** for communications with Meride's APIs
 - **Web** for producing HTML code (eg. integrating an embed)
-- **Encoder** for interacting with the encoder
+- **Storage** for interacting with the storage
 
 
 ### INSTALLATION
 
-`composer install`
+`composer require mosaico/meride-public-php-libs`
+
+### DEVELOPMENT INSTALLATION
+
+- clone the repo and go the the project folder
+- run `composer install`
 
 ### TESTING
 

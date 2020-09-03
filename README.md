@@ -11,7 +11,12 @@ The packages included are:
 
 ### INSTALLATION
 
-`composer install`
+`composer require mosaico/meride-public-php-libs`
+
+### DEVELOPMENT INSTALLATION
+
+- clone the repo and go the the project folder
+- run `composer install`
 
 ### TESTING
 

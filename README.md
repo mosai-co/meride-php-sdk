@@ -13,6 +13,8 @@ The packages included are:
 
 `composer require mosaico/meride-public-php-libs`
 
+As the full package will require PHP >= 7.4.1 and PHP < 7.5 for the documentation generation it will be safe to add the --ignore-platform-reqs to the composer require call. Anyway the minimum requirement for PHP will be version 7.2
+
 ### DEVELOPMENT INSTALLATION
 
 - clone the repo and go the the project folder

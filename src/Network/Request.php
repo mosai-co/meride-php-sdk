@@ -118,6 +118,15 @@ class Request
         {
             return false;
         }
+        if (\is_string($res)) {
+            return $res;
+        }
+        if (\is_object($res) && is_string($res->errors)) {
+            return $res->errors;
+        }
+        if (\is_array($res) && is_string($res['errors'])) {
+            return $res['errors'];
+        }
         foreach ($res->errors as $key => $message)
         {
             if (is_array($message)) {
@@ -188,6 +197,33 @@ class Request
         return $this->request($entityName.".json", 'POST', $values);
     }
     /**
+     * Adjusts the errors trying to cover all the cases that comes back from Meride platform
+     *
+     * @param mixed $res The network response
+     * @param int $httpCode The HTTP code response
+     * @return object
+     */
+    private function prepareErrors($res, $httpCode) {
+        $_errors = new \stdClass;
+        if (is_object($res) && isset($res->errors)) {
+            $_errors = $res->errors;
+        } else if (is_string($res)) {
+            $jsonRes = json_decode($res, true);
+            if (is_string($jsonRes)) {
+                $_errors->errors = [
+                    $httpCode => $jsonRes
+                ];
+            } else if (is_array($jsonRes) && isset($jsonRes['error']) && isset($jsonRes['error']['message'])) {
+                $_errors->errors = $jsonRes['error']['message'];
+            } else {
+                $_errors->errors = [
+                    'generic' => 'Some error was generated but there are no details'
+                ];
+            }
+        }
+        return $_errors;
+    }
+    /**
      * Performs a request to the REST API service
      * @param string $resource the final path of the service (eg. video.json, video/1.json)
      * @param string $verb the HTTP verb (GET|POST|PUT|DELETE)
@@ -250,13 +286,7 @@ class Request
         }
         if (isset($res->errors) || !$res || (int)$httpCode >= 400)
         {
-            $_errors = new \stdClass;
-            if (isset($res->errors)) {
-                $_errors = $res->errors;
-            } else if (is_string($res)) {
-                $jsonRes = json_decode($res, true);
-                $_errors->errors = $jsonRes['error']['message'];
-            }
+            $_errors = $this->prepareErrors($res, $httpCode);
             return new Response(false, new Error(self::getErrorString($_errors), $httpCode), $httpCode);
         }
         return ($res) ? new Response($res, false, $httpCode) :  new Response(array(), false, $httpCode);

@@ -74,12 +74,22 @@ class Client {
      *
      * @param String $inputFilePath Local file path
      * @param String $outputFileName The name of the output file
+     * @param String $hashType One between 'filename' (default) and 'file'.
+     *                         If 'filename' the hash is calculated on the file name, if 'file' the hash is calculated on the file content
      * @return mixed A URL of the video representation or false if some error occurs
      */
-    public function upload(String $inputFilePath, String $outputFileName)
+    public function upload(String $inputFilePath, String $outputFileName, $hashType = 'filename')
     {
-        //$key = hash_file('md5', $inputFilePath);
-        $key = md5($inputFilePath);
+        //
+        $key = '';
+        switch ($hashType) {
+            case 'file': 
+                $key = hash_file('md5', $inputFilePath);
+                break;
+            default:
+                $key = md5($inputFilePath);
+                break;
+        }
         // setting the key is a mandatory step
         $this->tusClient->setKey($key);
         // upload the file

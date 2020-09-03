@@ -12,7 +12,7 @@ final class MerideTest extends TestCase
         $this->MERIDE_AUTH_CODE = getenv('MERIDE_AUTH_CODE');
         $this->MERIDE_VERSION_1 = "";
         $this->MERIDE_VERSION_2 = "v2";
-        $this->TEST_ID = 919;
+        $this->TEST_ID = getenv('MERIDE_VIDEO_ID');
     }
     
     public function testGetVideoNotEmptyVersion1()
@@ -24,7 +24,8 @@ final class MerideTest extends TestCase
     public function testGetVideoNotEmpty()
     {
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
-        $this->assertNotEmpty($api->get("video", $this->TEST_ID));
+        $response = $api->get("video", $this->TEST_ID);
+        $this->assertNotEmpty($response);
     }
 
 
@@ -90,10 +91,10 @@ final class MerideTest extends TestCase
         $api = new Api($this->MERIDE_AUTH_CODE, $this->MERIDE_URL, $this->MERIDE_VERSION_2);
         $videos = $api->all('video', [
             'search_page' => 1,
-            'search_for_page' => 2
+            'search_for_page' => 1
         ]);
         $this->assertInstanceOf('Meride\MerideCollection', $videos);
-        $this->assertCount(2, $videos);
-        $this->assertEquals(2, $videos->count());
+        $this->assertCount(1, $videos);
+        $this->assertEquals(1, $videos->count());
     }
 }

@@ -16,6 +16,9 @@ pipelines:
           - composer install
           - export MERIDE_URL=$MERIDE_URL
           - export MERIDE_AUTH_CODE=$MERIDE_AUTH_CODE
+          - export MERIDE_STORAGESERVICE_URL=$MERIDE_STORAGESERVICE_URL
+          - export MERIDE_AUTH_USER=$MERIDE_AUTH_USER
+          - export MERIDE_VIDEO_ID=$MERIDE_VIDEO_ID
           - ./testall.sh
   tags:
     '*.*':
@@ -28,6 +31,9 @@ pipelines:
             - composer install
             - export MERIDE_URL=$MERIDE_URL
             - export MERIDE_AUTH_CODE=$MERIDE_AUTH_CODE
+            - export MERIDE_STORAGESERVICE_URL=$MERIDE_STORAGESERVICE_URL
+            - export MERIDE_AUTH_USER=$MERIDE_AUTH_USER
+            - export MERIDE_VIDEO_ID=$MERIDE_VIDEO_ID
             - ./testall.sh
       - step:
           name: Deploy to composer.meride.tv

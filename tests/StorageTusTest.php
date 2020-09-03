@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Meride\Storage\Tus\Client;
+use Meride\Storage\Tus\Token;
 
 final class StorageTusTest extends TestCase
 {
@@ -24,5 +25,34 @@ final class StorageTusTest extends TestCase
         $this->assertEquals($uploadToken, $tusClient->getUploadToken());
         $this->assertEquals($storageServiceBasePath, $tusClient->getServiceBasePath());
         $this->assertEquals($uploadPath, $tusClient->getUploadPath());
+    }
+    public function testTokenIsNotEmpty()
+    {
+        $tokenGenerator = new Token(getenv('MERIDE_AUTH_USER'), getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+        $token = '';
+        try {
+            $token = $tokenGenerator->generate();
+        } catch(\Exception $e) {}
+        $this->assertNotEmpty($token);
+    }
+    public function testUpload()
+    {
+        $videoOrigin = __DIR__."/assets/small.mp4";
+        $tokenGenerator = new Token(getenv('MERIDE_AUTH_USER'), getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+        try {
+            $token = $tokenGenerator->generate();
+        } catch(\Exception $e) {}
+        $this->assertNotEmpty($token);
+        $tusClient = new Client($token, getenv('MERIDE_STORAGESERVICE_URL'));
+        $tusClient->setProtocol('http');
+        $uploadUrl = null;
+        try {
+            $uploadUrl = $tusClient->upload($videoOrigin, 'videotest.mp4');
+        } catch (\Exception $e) {}
+        $this->assertTrue(is_string($uploadUrl), 'Upload URL is a string');
+        $this->assertRegExp('/uploads\/files/', $uploadUrl);
+        $extractedUrl = $tusClient->extractURL($uploadUrl);
+        $this->assertRegExp('/file/', $extractedUrl);
+
     }
 }

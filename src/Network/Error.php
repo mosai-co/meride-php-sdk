@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Class Error | Meride\Network\Error
+ *
+ * @package     Meride
+ * @subpackage  Network
+ * @author      Giovanni Manuel Toppi <giovanni.toppi@mosai.co>
+ * @copyright   Copyright (c) Mosai.co srl
+ */
 namespace Meride\Network;
 
 /**

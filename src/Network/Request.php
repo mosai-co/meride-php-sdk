@@ -223,6 +223,18 @@ class Request
         }
         return $_errors;
     }
+    private function buildPostFields( $data, $existingKeys='', &$returnArray=[]){
+        if(($data instanceof CURLFile) or !(is_array($data) or is_object($data))){
+            $returnArray[$existingKeys]=$data;
+            return $returnArray;
+        }
+        else{
+            foreach ($data as $key => $item) {
+                $this->buildPostFields($item,$existingKeys?$existingKeys."[$key]":$key,$returnArray);
+            }
+            return $returnArray;
+        }
+    }
     /**
      * Performs a request to the REST API service
      * @param string $resource the final path of the service (eg. video.json, video/1.json)
@@ -255,7 +267,16 @@ class Request
             $headers[] = "X-HTTP-Method-Override: ".$verb;
         }
         if (($verb == 'PUT' or $verb == 'POST') and !empty($params)) {
-            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $params);
+            if (is_array($params))
+            {
+                $headers[] = "Content-Type: multipart/form-data";
+            }
+            // @todo Temporary fix - errors due to nested arrays - to replicate the issue pass a nested array as parameter
+            if ($resource == 'video.json') {
+                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $params);
+            } else {
+                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $this->buildPostFields($params));
+            }
         }
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);

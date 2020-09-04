@@ -41,4 +41,4 @@ pipelines:
           name: Deploy to packagist
           deployment: production
           script:
-            - git push --mirror git@github.com:YourOrg/mirror-repo.git
+            - git push --mirror git@github.com:mosai-co/meride-php-sdk

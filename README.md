@@ -38,7 +38,7 @@ To produce an internal documentation phpdoc is required on the system.
 
 To see the documentation of the project launch this from the command line and access to the docs/ directory with a browser
 
-`vendor/bin/apigen generate src --destination docs`
+`phpdoc -d ./src/ -t ./docs`
 
 or launch the script `./generatedocs.sh`
 

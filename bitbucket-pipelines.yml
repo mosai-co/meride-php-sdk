@@ -41,4 +41,5 @@ pipelines:
           name: Deploy to packagist
           deployment: production
           script:
+            - apt-get update && apt-get install -y git-all
             - git push --mirror git@github.com:mosai-co/meride-php-sdk

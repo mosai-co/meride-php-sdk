@@ -1,5 +1,5 @@
 {
-    "name": "mosaico/meride-public-php-libs",
+    "name": "mosai-co/meride-php-sdk",
     "description": "Libraries to interact with Meride platform",
     "type": "library",
     "keywords": [

@@ -25,6 +25,8 @@ class MerideCollection extends MerideObject implements \Countable, \IteratorAggr
         $dataCopy = [];
         if (isset($apiResponse->jsonContent) && isset($apiResponse->jsonContent->data)) {
             $data = $apiResponse->jsonContent->data;
+        } else if (isset($apiResponse->jsonContent) && !isset($apiResponse->jsonContent->data)) {
+            $data = $apiResponse->jsonContent;
         }
         if (is_array($data)) {
             $dataArrayObject = new \ArrayObject($data);

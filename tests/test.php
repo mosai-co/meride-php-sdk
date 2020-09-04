@@ -3,7 +3,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Meride\Api;
 
-define('MERIDE_URL', "http://dev7.meride.tv/webink");
+define('MERIDE_URL', getenv('MERIDE_URL'));
 define('MERIDE_VERSION', 'v2');
 define('MERIDE_ACCESS_TOKEN', getenv('MERIDE_AUTH_CODE'));
 

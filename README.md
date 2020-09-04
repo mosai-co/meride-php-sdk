@@ -11,7 +11,9 @@ The packages included are:
 
 ### INSTALLATION
 
-`composer require mosaico/meride-public-php-libs`
+`composer require mosai-co/meride-php-sdk`
+
+it will require the [public composer repository](https://packagist.org/packages/mosai-co/meride-php-sdk)
 
 The minimum requirement for PHP will be version 7.2
 
@@ -19,6 +21,7 @@ The minimum requirement for PHP will be version 7.2
 
 - clone the repo and go the the project folder
 - run `composer install`
+- if you are not using a system that automatically includes composer autoload, include it in your page (e.g. `include './vendor/autoload.php'`) and you are ready to use the library.
 
 ### TESTING
 

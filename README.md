@@ -42,54 +42,91 @@ To see the documentation of the project launch this from the command line and ac
 
 or launch the script `./generatedocs.sh`
 
+### PUBLIC DOCUMENTATION
+
+To read the public documentation go to the [Meride's documentation page](https://www.meride.tv/docs/section.html?route=sdk__php/index)
+
+
 ### INITIALIZATION
 
 ```php
 
+
+
 use Meride\Api;
 
-define('MERIDE_URL', "https://URL_TO_REST_SERVICE");
-define('MERIDE_AUTH_CODE', "AUTH_CODE");
+// substitute with the URL of your own CMS path
+define('MERIDE_URL', "https://cms.meride.tv/CLIENT_NAME");
+// define which API version to use (default v2)
+define('MERIDE_VERSION', 'v2');
+// define your access token, visible inside the CMS
+define('MERIDE_ACCESS_TOKEN', 'MERIDE_AUTH_CODE');
 
-$merideApi = new Api(MERIDE_AUTH_CODE, MERIDE_URL);
+// instantiate an API object
+$merideApi = new Api(MERIDE_ACCESS_TOKEN, MERIDE_URL, MERIDE_VERSION);
+
 
 
 ```
 
-### GET request
+### GET request (single)
+
 
 ```php
-$videoResponse = $merideApi->get('configuration');
+
+$video = $merideApi->get('video', 1234);
+echo $video->title;
+
 ```
 
-or 
+### GET request (collection)
+
 
 ```php
-$videoResponse = $merideApi->get('configuration', $id);
+
+$videoCollection = $merideApi->all('video');
+// numbers of records in the collection
+$videoCount = $videoCollection->count();
+// iterating on the records
+foreach($videoCollection as $video) {
+    echo $video->title."\r\n";
+}
+
 ```
 
-read raw response
+### ERROR MANAGEMENT
 
 ```php
-$videoResponse->content
-```
 
-read JSON response
+// Reading a non-existing video
+$video = $merideApi->read('video', 9999);
+if ($video->hasErrors())
+{
+    // some error occured
+    $apiResponse = $video->getApiResponse();
+    $error = $apiResponse->error;
+    if ($apiResponse->httpCode == 404)
+    {
+        echo "Record not found";
+    }
+    else
+    {
+        echo "\r\nError message: ".$error->message;
+        echo "\r\nError code: ".$error->errorCode;
+    }
+}
+else
+{
+    if ($video->isEmpty())
+    {
+        echo "No data available as the response is empty";
+    }
+    else
+    {
+        echo "The video has ID ".$video->id." and title ".$video->title;
+    }
+}
 
-```php
-$videoResponse->jsonContent
-```
-
-read number of elements in the response
-
-```php
-$videoResponse->count()
-```
-
-read error
-
-```php
-$videoResponse->error
 ```
 
 ### WEB FEATURES

@@ -19,6 +19,13 @@ class Client {
      */
     protected $uploadPath = 'uploads/files';
     /**
+     * The upload path for the service in case of classic upload system.
+     * As for the Meride service storage is an immutable value but in this way is manageable
+     *
+     * @var string
+     */
+    protected $uploadDirectPath = 'directuploads/files';
+    /**
      * The base URL for the TUS service
      *
      * @var string
@@ -100,6 +107,41 @@ class Client {
             throw $e;
         }
         return $this->tusClient->getUrl();
+    }
+    /**
+     * Uploads a file to the storage service
+     *
+     * @param String $filePath Local file path
+     * @return mixed A URL of the video representation or false if some error occurs
+     */
+    public function uploadDirect(String $filePath)
+    {
+        // upload the file
+        $curl = \curl_init();
+
+        \curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->serviceBasePath.'/'.$this->uploadDirectPath,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('source'=> new \CurlFile($filePath)),
+            CURLOPT_HTTPHEADER => array(
+                'AuthType: user',
+                'Authorization: Bearer '.$this->getUploadToken()
+            ),
+        ));
+
+        $response = \curl_exec($curl);
+
+        \curl_close($curl);
+        $jsonResponse = \json_decode($response);
+        $uploadURL = str_replace("http:", "", $jsonResponse->uploadURL);
+        $uploadURL = str_replace("https:", "", $uploadURL);
+        return $uploadURL;
     }
     /**
      * Extracts the video URL from the TUS upload URL

@@ -13,7 +13,7 @@ $randNum = rand(0, 999999);
 $videoOrigin = __DIR__."/assets/small.mp4";
 $videoCopyRenamed = __DIR__."/assets/small".$randNum.".mp4";
 
-$tokenGenerator = new Token('ilfoglio', getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+$tokenGenerator = new Token('dueper', getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
 try {
     $token = $tokenGenerator->generate();
 } catch(\Exception $e) {
@@ -37,7 +37,7 @@ if ($uploadUrl !== false) {
     $videoResponse = $merideApi->create('video', array(
         'title' => "Test video",
         'video' => $extractedUrl,
-        'squeeze_slot' => 'basic'
+        'squeeze_slot' => 'shared'
     ));
     echo var_dump($videoResponse);
 } else {

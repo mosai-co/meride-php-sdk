@@ -55,4 +55,24 @@ final class StorageTusTest extends TestCase
         $this->assertRegExp('/file/', $extractedUrl);
 
     }
+    public function testUploadDirect()
+    {
+        $videoOrigin = __DIR__."/assets/small.mp4";
+        $tokenGenerator = new Token(getenv('MERIDE_AUTH_USER'), getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+        try {
+            $token = $tokenGenerator->generate();
+        } catch(\Exception $e) {}
+        $this->assertNotEmpty($token);
+        $tusClient = new Client($token, getenv('MERIDE_STORAGESERVICE_URL'));
+        $tusClient->setProtocol('http');
+        $uploadUrl = null;
+        try {
+            $uploadUrl = $tusClient->uploadDirect($videoOrigin);
+        } catch (\Exception $e) {}
+        $this->assertTrue(is_string($uploadUrl), 'Upload URL is a string');
+        $this->assertRegExp('/uploads\/files/', $uploadUrl);
+        $extractedUrl = $tusClient->extractURL($uploadUrl);
+        $this->assertRegExp('/file/', $extractedUrl);
+
+    }
 }

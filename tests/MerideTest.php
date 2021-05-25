@@ -3,6 +3,8 @@
 use PHPUnit\Framework\TestCase;
 use Meride\Api;
 use Meride\MerideEntity;
+use Meride\Storage\Tus\Token;
+use Meride\Storage\Tus\Client;
 
 final class MerideTest extends TestCase
 {
@@ -13,6 +15,10 @@ final class MerideTest extends TestCase
         $this->MERIDE_VERSION_1 = "";
         $this->MERIDE_VERSION_2 = "v2";
         $this->TEST_ID = getenv('MERIDE_VIDEO_ID');
+        $this->STORAGE_PROTOCOL = getenv('MERIDE_STORAGE_PROTOCOL');
+        if (empty($STORAGE_PROTOCOL)) {
+            $this->STORAGE_PROTOCOL = "https";
+        }
     }
     
     public function testGetVideoNotEmptyVersion1()
@@ -69,10 +75,27 @@ final class MerideTest extends TestCase
         $videoOrigin = __DIR__."/assets/small.mp4";
         $videoCopyRenamed = __DIR__."/assets/small".$randNum.".mp4";
         copy($videoOrigin, $videoCopyRenamed);
-        $video = new \CurlFile($videoCopyRenamed);
+        
+        $tokenGenerator = new Token(getenv('MERIDE_AUTH_USER'), getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+        try {
+            $token = $tokenGenerator->generate();
+        } catch(\Exception $e) {
+            unlink($videoCopyRenamed);
+        }
+        $this->assertNotEmpty($token);
+        $tusClient = new Client($token, getenv('MERIDE_STORAGESERVICE_URL'));
+        $tusClient->setProtocol($this->STORAGE_PROTOCOL);
+        $uploadUrl = null;
+        try {
+            $uploadUrl = $tusClient->uploadDirect($videoOrigin);
+        } catch (\Exception $e) {
+            unlink($videoCopyRenamed);
+        }
+        $extractedUrl = $tusClient->extractURL($uploadUrl);
+
         $videoResponse = $api->create('video', array(
             'title' => "Test video ".$randNum,
-            'video' => $video
+            'video' => $extractedUrl
         ));
         unlink($videoCopyRenamed);
         $this->assertInstanceOf('Meride\MerideEntity', $videoResponse);

@@ -13,7 +13,7 @@ $randNum = rand(0, 999999);
 $videoOrigin = __DIR__."/assets/small.mp4";
 $videoCopyRenamed = __DIR__."/assets/small".$randNum.".mp4";
 
-$tokenGenerator = new Token('wls', getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
+$tokenGenerator = new Token(getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_AUTH_CODE'), getenv('MERIDE_STORAGESERVICE_URL'));
 try {
     $token = $tokenGenerator->generate();
 } catch(\Exception $e) {

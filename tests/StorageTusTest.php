@@ -6,6 +6,13 @@ use Meride\Storage\Tus\Token;
 
 final class StorageTusTest extends TestCase
 {
+    protected function setUp()
+    {
+        $this->STORAGE_PROTOCOL = getenv('MERIDE_STORAGE_PROTOCOL');
+        if (empty($STORAGE_PROTOCOL)) {
+            $this->STORAGE_PROTOCOL = "https";
+        }
+    }
     public function testFirstInstanceDefaultData()
     {
         $tusClient = new Client();
@@ -44,7 +51,7 @@ final class StorageTusTest extends TestCase
         } catch(\Exception $e) {}
         $this->assertNotEmpty($token);
         $tusClient = new Client($token, getenv('MERIDE_STORAGESERVICE_URL'));
-        $tusClient->setProtocol('http');
+        $tusClient->setProtocol($this->STORAGE_PROTOCOL);
         $uploadUrl = null;
         try {
             $uploadUrl = $tusClient->upload($videoOrigin, 'videotest.mp4');
@@ -64,7 +71,7 @@ final class StorageTusTest extends TestCase
         } catch(\Exception $e) {}
         $this->assertNotEmpty($token);
         $tusClient = new Client($token, getenv('MERIDE_STORAGESERVICE_URL'));
-        $tusClient->setProtocol('http');
+        $tusClient->setProtocol($this->STORAGE_PROTOCOL);
         $uploadUrl = null;
         try {
             $uploadUrl = $tusClient->uploadDirect($videoOrigin);

@@ -80,4 +80,44 @@ class MerideCollection extends MerideObject implements \Countable, \IteratorAggr
     {
         return $this->apiResponse->isEmpty();
     }
+    public function from()
+    {
+        return $this->apiResponse->jsonContent->from ?? null;
+    }
+    public function currentPage()
+    {
+        return $this->apiResponse->jsonContent->current_page ?? null;
+    }
+    public function firstPageUrl()
+    {
+        return $this->apiResponse->jsonContent->first_page_url ?? null;
+    }
+    public function lastPage()
+    {
+        return $this->apiResponse->jsonContent->last_page ?? null;
+    }
+    public function lastPageUrl()
+    {
+        return $this->apiResponse->jsonContent->last_page_url ?? null;
+    }
+    public function nextPageUrl()
+    {
+        return $this->apiResponse->jsonContent->next_page_url ?? null;
+    }
+    public function perPage()
+    {
+        return $this->apiResponse->jsonContent->per_page ?? null;
+    }
+    public function prevPageUrl()
+    {
+        return $this->apiResponse->jsonContent->prev_page_url ?? null;
+    }
+    public function to()
+    {
+        return $this->apiResponse->jsonContent->to ?? null;
+    }
+    public function total()
+    {
+        return $this->apiResponse->jsonContent->total ?? null;
+    }
 }

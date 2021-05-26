@@ -53,7 +53,7 @@ class Api
      * Produces a MerideCollection from a Meride\Network\Response
      *
      * @param Meride\Network\Response $originalResponse
-     * @return mixed $response if some error exists Meride\Network\Response otherwise Meride\MerideEntity. If there is an empty response it will return null
+     * @return MerideCollection If there is an empty response it will return null
      */
     private function collection(Network\Response $originalResponse)
     {
@@ -100,7 +100,7 @@ class Api
      * Reads a list of objects of the given entity type
      * @param String $entityName The name of the entity in use (eg. 'video', 'embed', ...)
      * @param Array $params An associative array to transorm to GET parameters
-     * @return Network\Response The response for the object/error
+     * @return MerideCollection The response for the object/error
      */
     public function all($entityName, array $params = [])
     {

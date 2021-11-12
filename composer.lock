@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5afd8366913c8760da7db6e66ebed899",
+    "content-hash": "b32ff9bcc44405abab4cb384813a9de5",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
-            "version": "v1.2.2",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ankitpokhrel/tus-php.git",
-                "reference": "2fae94916e84665545ce36c93784571df7057e18"
+                "reference": "1d1317ba06f1a3511a56935d5f07860f53e69cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ankitpokhrel/tus-php/zipball/2fae94916e84665545ce36c93784571df7057e18",
-                "reference": "2fae94916e84665545ce36c93784571df7057e18",
+                "url": "https://api.github.com/repos/ankitpokhrel/tus-php/zipball/1d1317ba06f1a3511a56935d5f07860f53e69cfe",
+                "reference": "1d1317ba06f1a3511a56935d5f07860f53e69cfe",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.3",
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
                 "nesbot/carbon": "^1.26.3 || ^2.0",
                 "php": "^7.1.3",
                 "predis/predis": "^1.1",
@@ -35,7 +35,6 @@
                 "ext-pcntl": "*",
                 "friendsofphp/php-cs-fixer": "^2.9",
                 "mockery/mockery": "^1.3.0",
-                "php-mock/php-mock": "^2.0",
                 "phpunit/phpunit": "7.5.20"
             },
             "bin": [
@@ -58,13 +57,17 @@
                 }
             ],
             "description": "A pure PHP server and client for the tus resumable upload protocol v1.0.0",
+            "support": {
+                "issues": "https://github.com/ankitpokhrel/tus-php/issues",
+                "source": "https://github.com/ankitpokhrel/tus-php/tree/v1.3.1"
+            },
             "funding": [
                 {
                     "url": "https://paypal.me/ankitpokhrel",
                     "type": "custom"
                 }
             ],
-            "time": "2020-06-27T08:53:33+00:00"
+            "time": "2020-12-15T09:08:32+00:00"
         },
         {
             "name": "brick/math",
@@ -3571,5 +3574,5 @@
         "php": "^7.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }

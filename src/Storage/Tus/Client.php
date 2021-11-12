@@ -136,7 +136,11 @@ class Client {
         ));
 
         $response = \curl_exec($curl);
-
+        if($response === false){
+            $error = \curl_error($curl);
+            \curl_close($curl);
+            throw new \Exception($error);
+        }
         \curl_close($curl);
         $jsonResponse = \json_decode($response);
         $uploadURL = str_replace("http:", "", $jsonResponse->uploadURL);

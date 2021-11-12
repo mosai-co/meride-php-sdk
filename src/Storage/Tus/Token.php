@@ -70,6 +70,11 @@ class Token
         curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
 
         $content = curl_exec($curlHandle);
+        if($content === false) {
+            $error = curl_error($curlHandle);
+            curl_close($curlHandle);
+            throw new \Exception($error);
+        }
         $httpCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
         curl_close($curlHandle);
         $result = json_decode($content);

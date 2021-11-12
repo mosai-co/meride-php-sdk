@@ -80,16 +80,21 @@ class Token {
             curl_setopt($c, CURLOPT_URL, $this->authURL. 'restauth/'.$this->version.'/refresh');
         }
 		$content = curl_exec($c);
+        if($content === false) {
+            $error = curl_error($c);
+            curl_close($c);
+            throw new \Exception($error);
+        }
 		curl_close($c);
 		$obj = json_decode($content);
 		if(isset($obj->errors))
 		{
-			throw new Exception(implode(",", $obj->errors));
+			throw new \Exception(implode(",", $obj->errors));
 		}
  
 		if(!isset($obj->access_token))
 		{
-			throw new Exception("No access-token");
+			throw new \Exception("No access-token");
 		}
 		else
 		{
@@ -131,6 +136,11 @@ class Token {
         }
 
         $content = curl_exec($c);
+        if($content === false) {
+            $error = curl_error($c);
+            curl_close($c);
+            throw new \Exception($error);
+        }
         curl_close($c);
         $obj = json_decode($content);
         if (isset($obj->errors)) {

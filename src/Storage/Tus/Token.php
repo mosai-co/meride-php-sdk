@@ -51,7 +51,7 @@ class Token
     /**
      * Generates a token calling the Tus service
      *
-     * @return void
+     * @return string
      */
     public function generate()
     {

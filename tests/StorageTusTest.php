@@ -6,7 +6,7 @@ use Meride\Storage\Tus\Token;
 
 final class StorageTusTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->STORAGE_PROTOCOL = getenv('MERIDE_STORAGE_PROTOCOL');
         if (empty($STORAGE_PROTOCOL)) {
@@ -57,9 +57,9 @@ final class StorageTusTest extends TestCase
             $uploadUrl = $tusClient->upload($videoOrigin, 'videotest.mp4');
         } catch (\Exception $e) {}
         $this->assertTrue(is_string($uploadUrl), 'Upload URL is a string');
-        $this->assertRegExp('/uploads\/files/', $uploadUrl);
+        $this->assertMatchesRegularExpression('/uploads\/files/', $uploadUrl);
         $extractedUrl = $tusClient->extractURL($uploadUrl);
-        $this->assertRegExp('/file/', $extractedUrl);
+        $this->assertMatchesRegularExpression('/file/', $extractedUrl);
 
     }
     public function testUploadDirect()
@@ -77,9 +77,9 @@ final class StorageTusTest extends TestCase
             $uploadUrl = $tusClient->uploadDirect($videoOrigin);
         } catch (\Exception $e) {}
         $this->assertTrue(is_string($uploadUrl), 'Upload URL is a string');
-        $this->assertRegExp('/uploads\/files/', $uploadUrl);
+        $this->assertMatchesRegularExpression('/uploads\/files/', $uploadUrl);
         $extractedUrl = $tusClient->extractURL($uploadUrl);
-        $this->assertRegExp('/file/', $extractedUrl);
+        $this->assertMatchesRegularExpression('/file/', $extractedUrl);
 
     }
 }

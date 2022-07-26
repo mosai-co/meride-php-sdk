@@ -5,7 +5,7 @@ use Meride\Network\Token;
 
 final class TokenTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->MERIDE_URL = getenv('MERIDE_URL');
         $this->MERIDE_AUTH_CODE = getenv('MERIDE_AUTH_CODE');

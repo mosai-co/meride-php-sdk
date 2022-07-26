@@ -8,26 +8,26 @@ final class WebEmbedTest extends TestCase
 
     public function testPresumeBaseUrlV1()
     {
-        $this->assertContains('mediamosaico', Embed::presumeBaseURL('mosaico', 'v1'));
+        $this->assertStringContainsString('mediamosaico', Embed::presumeBaseURL('mosaico', 'v1'));
     }
 
     public function testPresumeBaseUrlV2()
     {
-        $this->assertContains('data.meride.tv', Embed::presumeBaseURL('mosaico', 'v2'));
+        $this->assertStringContainsString('data.meride.tv', Embed::presumeBaseURL('mosaico', 'v2'));
     }
 
     public function testPresumeBaseIframeUrlV1()
     {
         $iframeBaseURL = Embed::presumeBaseIframeURL('mosaico', 'v1');
-        $this->assertContains('mediamosaico', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('mediamosaico', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
     }
 
     public function testPresumeBaseIframeUrlV2()
     {
         $iframeBaseURL = Embed::presumeBaseIframeURL('mosaico', 'v2');
-        $this->assertContains('data.meride.tv', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('data.meride.tv', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
     }
 
     public function testPresumeIframeUrlV1()
@@ -36,9 +36,9 @@ final class WebEmbedTest extends TestCase
             'clientID' => 'mosaico',
             'embedID' => 123
         ], 'v1');
-        $this->assertContains('mediamosaico', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
-        $this->assertContains('123', $iframeBaseURL);
+        $this->assertStringContainsString('mediamosaico', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('123', $iframeBaseURL);
     }
 
     public function testPresumeIframeUrlV2()
@@ -47,9 +47,9 @@ final class WebEmbedTest extends TestCase
             'clientID' => 'mosaico',
             'embedID' => 123
         ], 'v2');
-        $this->assertContains('data.meride.tv', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
-        $this->assertContains('123', $iframeBaseURL);
+        $this->assertStringContainsString('data.meride.tv', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('123', $iframeBaseURL);
     }
 
     public function testPresumeIframeUrlWithBulkLabelV1()
@@ -59,10 +59,10 @@ final class WebEmbedTest extends TestCase
             'embedID' => 123,
             'bulkLabel' => 'testlabel'
         ], 'v1');
-        $this->assertContains('mediamosaico', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
-        $this->assertContains('123', $iframeBaseURL);
-        $this->assertContains('testlabel', $iframeBaseURL);
+        $this->assertStringContainsString('mediamosaico', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('123', $iframeBaseURL);
+        $this->assertStringContainsString('testlabel', $iframeBaseURL);
     }
 
     public function testPresumeIframeUrlWithBulkLabelV2()
@@ -72,10 +72,10 @@ final class WebEmbedTest extends TestCase
             'embedID' => 123,
             'bulkLabel' => 'testlabel'
         ], 'v2');
-        $this->assertContains('data.meride.tv', $iframeBaseURL);
-        $this->assertContains('iframe.php', $iframeBaseURL);
-        $this->assertContains('123', $iframeBaseURL);
-        $this->assertContains('testlabel', $iframeBaseURL);
+        $this->assertStringContainsString('data.meride.tv', $iframeBaseURL);
+        $this->assertStringContainsString('iframe.php', $iframeBaseURL);
+        $this->assertStringContainsString('123', $iframeBaseURL);
+        $this->assertStringContainsString('testlabel', $iframeBaseURL);
     }
     
 
